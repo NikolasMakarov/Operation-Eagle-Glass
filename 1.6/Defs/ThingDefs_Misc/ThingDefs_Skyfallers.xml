@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef Name="OEG_HelicopterArriving_Base" ParentName="SkyfallerBase" Abstract="True">
+    <label>helicopter</label>
+    <thingClass>OperationEagleGlass.Skyfaller_Hovering</thingClass>
+    <graphicData>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <shaderType>CutoutFlying</shaderType>
+      <drawSize>(5,5)</drawSize>
+    </graphicData>
+    <size>(5,5)</size>
+    <tickerType>Normal</tickerType>
+    <selectable>False</selectable>
+    <verbs>
+      <li>
+        <verbClass>Verb_Shoot</verbClass>
+        <hasStandardCommand>false</hasStandardCommand>
+        <defaultProjectile>Bullet_Helicopter_Gun</defaultProjectile>
+        <warmupTime>0</warmupTime>
+        <defaultCooldownTime>1</defaultCooldownTime>
+        <range>35</range>
+        <burstShotCount>10</burstShotCount>
+        <ticksBetweenBurstShots>5</ticksBetweenBurstShots>
+        <soundCast>Shot_Minigun</soundCast>
+        <soundCastTail>GunTail_Medium</soundCastTail>
+        <muzzleFlashScale>12</muzzleFlashScale>
+      </li>
+    </verbs>
+    <comps>
+      <li Class="OperationEagleGlass.CompProperties_AmmoUser">
+        <ammoCapacity>500</ammoCapacity>
+        <ammoPerShot>1</ammoPerShot>
+      </li>
+    </comps>
+    <skyfaller>
+      <rotateGraphicTowardsDirection>true</rotateGraphicTowardsDirection>
+      <movementType>Decelerate</movementType>
+      <speedCurve>
+        <points>
+          <li>(0, 1.8)</li>
+          <li>(0.6, 0.8)</li>
+          <li>(0.9, 0.2)</li>
+          <li>(1, 0)</li>
+        </points>
+      </speedCurve>
+      <angleCurve>
+        <points>
+          <li>(0, 20)</li>
+          <li>(0.5, 15)</li>
+          <li>(0.8, 5)</li>
+          <li>(1, 0)</li>
+        </points>
+      </angleCurve>
+      <rotationCurve>
+        <points>
+          <li>(0, 0)</li>
+          <li>(1, 0)</li>
+        </points>
+      </rotationCurve>
+      <shadowSize>(5,5)</shadowSize>
+      <motesPerCell>1</motesPerCell>
+      <ticksToImpactRange>
+        <min>200</min>
+        <max>200</max>
+      </ticksToImpactRange>
+    </skyfaller>
+  </ThingDef>
+
+  <ThingDef ParentName="OEG_HelicopterArriving_Base">
+    <defName>OEG_HelicopterArriving_M5AOne</defName>
+    <graphicData>
+      <texPath>Things/Vehicle/M5A1</texPath>
+    </graphicData>
+    <modExtensions>
+      <li Class="OperationEagleGlass.HelicopterSkyfallerExtension">
+        <leavingSkyfaller>OEG_HelicopterLeaving_M5AOne</leavingSkyfaller>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="OEG_HelicopterArriving_Base">
+    <defName>OEG_HelicopterArriving_M5ATwo</defName>
+    <graphicData>
+      <texPath>Things/Vehicle/M5A2</texPath>
+    </graphicData>
+    <modExtensions>
+      <li Class="OperationEagleGlass.HelicopterSkyfallerExtension">
+        <leavingSkyfaller>OEG_HelicopterLeaving_M5ATwo</leavingSkyfaller>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef Name="OEG_HelicopterLeaving_Base" ParentName="SkyfallerBase" Abstract="True">
+    <label>helicopter</label>
+    <thingClass>OperationEagleGlass.Skyfaller_Base</thingClass>
+    <graphicData>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <shaderType>CutoutFlying</shaderType>
+      <drawSize>(5,5)</drawSize>
+    </graphicData>
+    <size>(5,5)</size>
+    <skyfaller>
+      <rotateGraphicTowardsDirection>true</rotateGraphicTowardsDirection>
+      <reversed>true</reversed>
+      <movementType>Accelerate</movementType>
+      <shadow>Things/Skyfaller/SkyfallerShadowCircle</shadow>
+      <shadowSize>(5,5)</shadowSize>
+      <motesPerCell>1</motesPerCell>
+      <anticipationSound>DropPod_Leaving</anticipationSound>
+      <anticipationSoundTicks>-10</anticipationSoundTicks>
+      <ticksToImpactRange>
+        <min>-150</min>
+        <max>-150</max>
+      </ticksToImpactRange>
+      <speedCurve>
+        <points>
+          <li>(0, 0)</li>
+          <li>(0.2, 0.3)</li>
+          <li>(0.5, 0.8)</li>
+          <li>(1, 1.5)</li>
+        </points>
+      </speedCurve>
+      <angleCurve>
+        <points>
+          <li>(0, 0)</li>
+          <li>(0.2, 5)</li>
+          <li>(0.5, 12)</li>
+          <li>(1, 15)</li>
+        </points>
+      </angleCurve>
+      <rotationCurve>
+        <points>
+          <li>(0, 0)</li>
+          <li>(0.3, 1)</li>
+          <li>(0.6, 3)</li>
+          <li>(1, 5)</li>
+        </points>
+      </rotationCurve>
+    </skyfaller>
+  </ThingDef>
+
+  <ThingDef ParentName="OEG_HelicopterLeaving_Base">
+    <defName>OEG_HelicopterLeaving_M5AOne</defName>
+    <graphicData>
+      <texPath>Things/Vehicle/M5A1</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="OEG_HelicopterLeaving_Base">
+    <defName>OEG_HelicopterLeaving_M5ATwo</defName>
+    <graphicData>
+      <texPath>Things/Vehicle/M5A2</texPath>
+    </graphicData>
+  </ThingDef>
+
+</Defs>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <HediffDef ParentName="ImplantHediffBase">
+    <defName>OEG_HelicopterControlImplant</defName>
+    <label>helicopter control implant</label>
+    <description>An installed helicopter control implant.</description>
+    <descriptionHyperlinks>
+      <ThingDef>OEG_Item_HelicopterControlImplant</ThingDef>
+    </descriptionHyperlinks>
+    <spawnThingOnRemoved>OEG_Item_HelicopterControlImplant</spawnThingOnRemoved>
+    <comps>
+      <li Class="HediffCompProperties_GiveAbility">
+        <abilityDefs>
+          <li>OEG_CallHelicopterSupport</li>
+          <li>OEG_CallHelicopterTransport</li>
+          <li>OEG_CallHelicopterReinforcement</li>
+        </abilityDefs>
+      </li>
+    </comps>
+  </HediffDef>
+
+</Defs>

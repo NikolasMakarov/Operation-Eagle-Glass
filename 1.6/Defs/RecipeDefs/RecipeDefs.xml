@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <RecipeDef ParentName="SurgeryInstallImplantBase">
+    <defName>OEG_InstallHelicopterControlImplant</defName>
+    <label>install helicopter control link</label>
+    <description>Installs a helicopter control link.</description>
+    <jobString>Installing helicopter control link.</jobString>
+    <workAmount>2500</workAmount>
+    <recipeUsers>
+      <li>OEG_TestMech</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>OEG_Item_HelicopterControlImplant</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>OEG_Item_HelicopterControlImplant</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <addsHediff>OEG_HelicopterControlImplant</addsHediff>
+    <appliedOnFixedBodyParts>
+      <li>MechanicalThorax</li>
+    </appliedOnFixedBodyParts>
+  </RecipeDef>
+
+</Defs>

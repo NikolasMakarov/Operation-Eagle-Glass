@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <AbilityDef Name="OEG_CallHelicopterBase" Abstract="True">
+    <gizmoClass>Command_Ability</gizmoClass>
+    <abilityClass>OperationEagleGlass.Ability_CallHelicopter</abilityClass>
+    <verbProperties>
+      <verbClass>OperationEagleGlass.Verb_HeliPlacement</verbClass>
+      <range>40</range>
+      <warmupTime>0</warmupTime>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetPawns>false</canTargetPawns>
+        <canTargetBuildings>false</canTargetBuildings>
+      </targetParams>
+    </verbProperties>
+    <cooldownTicksRange>600</cooldownTicksRange>
+    <iconPath>UI/Abilities/CallHelicopter</iconPath>
+    <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
+    <displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
+    <disableGizmoWhileUndrafted>false</disableGizmoWhileUndrafted>
+  </AbilityDef>
+
+  <AbilityDef ParentName="OEG_CallHelicopterBase">
+    <defName>OEG_CallHelicopterSupport</defName>
+    <label>call helicopter support</label>
+    <description>Call in a helicopter for fire support. The helicopter will hover and engage enemies for a limited time.</description>
+    <comps>
+      <li Class="OperationEagleGlass.CompProperties_AbilityCallHelicopter_Support">
+        <skyfallerDef>OEG_HelicopterArriving_M5AOne</skyfallerDef>
+        <durationTicks>1800</durationTicks>
+        <costList>
+          <Steel>50</Steel>
+          <ComponentIndustrial>5</ComponentIndustrial>
+        </costList>
+      </li>
+    </comps>
+  </AbilityDef>
+
+  <AbilityDef ParentName="OEG_CallHelicopterBase">
+    <defName>OEG_CallHelicopterTransport</defName>
+    <label>call helicopter transport</label>
+    <description>Call in a helicopter to deploy mechanoid reinforcements.</description>
+    <comps>
+      <li Class="OperationEagleGlass.CompProperties_AbilityCallHelicopter_Transport">
+        <skyfallerDef>OEG_HelicopterArriving_M5AOne</skyfallerDef>
+        <pawnsToDrop>
+          <Mech_CentipedeBlaster>2</Mech_CentipedeBlaster>
+          <Mech_Lancer>2</Mech_Lancer>
+        </pawnsToDrop>
+        <costList>
+          <Steel>100</Steel>
+          <ComponentIndustrial>10</ComponentIndustrial>
+        </costList>
+      </li>
+    </comps>
+  </AbilityDef>
+
+  <AbilityDef ParentName="OEG_CallHelicopterBase">
+    <defName>OEG_CallHelicopterReinforcement</defName>
+    <label>call helicopter reinforcement</label>
+    <description>Call in a helicopter that deploys mechanoids and provides fire support.</description>
+    <comps>
+      <li Class="OperationEagleGlass.CompProperties_AbilityCallHelicopter_Reinforcement">
+        <skyfallerDef>OEG_HelicopterArriving_M5ATwo</skyfallerDef>
+        <pawnsToDrop>
+          <Mech_Lancer>2</Mech_Lancer>
+          <Mech_CentipedeBlaster>2</Mech_CentipedeBlaster>
+        </pawnsToDrop>
+        <durationTicks>1800</durationTicks>
+        <costList>
+          <Steel>150</Steel>
+          <ComponentIndustrial>15</ComponentIndustrial>
+        </costList>
+      </li>
+    </comps>
+  </AbilityDef>
+
+</Defs>

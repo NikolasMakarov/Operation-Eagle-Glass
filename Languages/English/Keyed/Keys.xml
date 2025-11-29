@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <OEG_NotEnoughResources>Not enough {0} (need {1}, have {2})</OEG_NotEnoughResources>
+  <OEG_FailedToConsumeResources>Failed to consume resources</OEG_FailedToConsumeResources>
+  <OEG_RecallHelicopter>Recall Helicopter</OEG_RecallHelicopter>
+  <OEG_RecallHelicopterDesc>Recall the active helicopter.</OEG_RecallHelicopterDesc>
+</LanguageData>
