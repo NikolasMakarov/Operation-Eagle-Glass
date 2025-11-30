@@ -50,15 +50,7 @@ namespace OperationEagleGlass
         {
             if (cachedRopeMaterial == null)
             {
-                Texture2D ropeTexture = ContentFinder<Texture2D>.Get("Effects/Rope", false);
-                if (ropeTexture == null)
-                {
-                    cachedRopeMaterial = SolidColorMaterials.SimpleSolidColorMaterial(new Color(0.15f, 0.1f, 0.05f));
-                }
-                else
-                {
-                    cachedRopeMaterial = MaterialPool.MatFrom("Effects/Rope", ShaderDatabase.Transparent);
-                }
+                cachedRopeMaterial = SolidColorMaterials.SimpleSolidColorMaterial(new Color(0.15f, 0.1f, 0.05f));
             }
         }
         
