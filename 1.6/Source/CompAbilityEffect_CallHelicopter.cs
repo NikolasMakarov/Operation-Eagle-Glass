@@ -11,17 +11,9 @@ namespace OperationEagleGlass
     {
         public new CompProperties_AbilityCallHelicopter Props => (CompProperties_AbilityCallHelicopter)props;
         public Rot4? forcedRotation = null;
-        private Skyfaller_Hovering skyfaller = null;
-
-        public Skyfaller_Hovering Skyfaller => skyfaller;
-
+        public Skyfaller_Hovering skyfaller = null;
         public override bool Valid(LocalTargetInfo target, bool throwMessages = false)
         {
-            if (skyfaller != null && !skyfaller.Destroyed)
-            {
-                return true;
-            }
-
             if (Props.costList != null)
             {
                 var resourceLoader = parent.pawn.TryGetComp<CompResourceLoader>();
@@ -46,13 +38,6 @@ namespace OperationEagleGlass
 
         public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
         {
-            if (skyfaller != null && !skyfaller.Destroyed)
-            {
-                skyfaller.Depart();
-                skyfaller = null;
-                return;
-            }
-
             if (Props.costList != null)
             {
                 var resourceLoader = parent.pawn.TryGetComp<CompResourceLoader>();

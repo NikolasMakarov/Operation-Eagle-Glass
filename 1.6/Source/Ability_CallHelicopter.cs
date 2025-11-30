@@ -1,4 +1,4 @@
-﻿using RimWorld;
+using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,44 +21,29 @@ namespace OperationEagleGlass
 
         public override IEnumerable<Command> GetGizmos()
         {
-            if (gizmo == null)
-            {
-                gizmo = (Command)Activator.CreateInstance(def.gizmoClass, this, pawn);
-                gizmo.Order = def.uiOrder;
-            }
             var helicopterComp = this.EffectComps.OfType<CompAbilityEffect_CallHelicopter>().FirstOrDefault();
-            if (helicopterComp != null)
+
+            foreach (var gizmo in base.GetGizmos())
             {
-                if (helicopterComp.Skyfaller != null && !helicopterComp.Skyfaller.Destroyed)
+                if (helicopterComp.skyfaller != null && !helicopterComp.skyfaller.Destroyed)
                 {
-                    gizmo.defaultLabel = "OEG_RecallHelicopter".Translate();
-                    gizmo.defaultDesc = "OEG_RecallHelicopterDesc".Translate();
-                    gizmo.icon = ContentFinder<Texture2D>.Get("UI/Commands/Recall", true);
+                    var recall = new Command_Action
+                    {
+                        defaultLabel = "OEG_RecallHelicopter".Translate(),
+                        defaultDesc = "OEG_RecallHelicopterDesc".Translate(),
+                        icon = ContentFinder<Texture2D>.Get("UI/Commands/Recall", true),
+                        action = delegate
+                        {
+                            helicopterComp.skyfaller.Depart();
+                            helicopterComp.skyfaller = null;
+                        }
+                    };
+                    yield return recall;
                 }
                 else
                 {
-                    gizmo.defaultLabel = def.LabelCap;
-                    gizmo.defaultDesc = def.GetTooltip(pawn);
-                    gizmo.icon = def.uiIcon;
+                    yield return gizmo;
                 }
-            }
-
-            if (!pawn.Drafted || def.showWhenDrafted)
-            {
-                yield return gizmo;
-            }
-            
-            if (DebugSettings.ShowDevGizmos && inCooldown && CanCooldown)
-            {
-                yield return new Command_Action
-                {
-                    defaultLabel = "DEV: Reset cooldown",
-                    action = delegate
-                    {
-                        inCooldown = false;
-                        charges = maxCharges;
-                    }
-                };
             }
         }
     }

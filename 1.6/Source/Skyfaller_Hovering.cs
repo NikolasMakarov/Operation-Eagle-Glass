@@ -32,7 +32,7 @@ namespace OperationEagleGlass
             base.Tick();
             if (this.IsHashIntervalTick(10))
             {
-                FleckMaker.ThrowDustPuffThick(this.Position.ToVector3Shifted(), this.Map, 2f, Color.white);
+                FleckMaker.ThrowDustPuffThick(this.Position.ToVector3Shifted(), this.Map, 5f, Color.white);
             }
         }
     }
@@ -47,23 +47,16 @@ namespace OperationEagleGlass
         private LocalTargetInfo currentTargetInt = LocalTargetInfo.Invalid;
         private const int TryStartShootSomethingIntervalTicks = 15;
         private List<Pawn> pawnsToDeploy = new List<Pawn>();
-        private int currentPawnIndex = 0;
         private bool isDeployingRope = false;
-        private float ropeLength = 0f;
-        private RopeState ropeState = RopeState.Extending;
-        private Material ropeMaterial;
+        private Rope leftRope;
+        private Rope rightRope;
         public bool hasRopeDeployment = false;
-
-        private const float EXTEND_SPEED = 0.3f;
-        private const float RETRACT_SPEED = 0.5f;
-
-        private enum RopeState { Extending, Retracting }
-
-        public bool IsRopeDeploymentComplete => currentPawnIndex >= pawnsToDeploy.Count && !isDeployingRope && ropeLength <= 0f;
 
         private bool WarmingUp => burstWarmupTicksLeft > 0;
 
         public Verb AttackVerb => PrimaryVerb;
+
+        public bool IsRopeDeploymentComplete => leftRope.IsComplete && rightRope.IsComplete && pawnsToDeploy.Count == 0;
 
         private void TryStartShootSomething(bool canBeginBurstImmediately)
         {
@@ -251,15 +244,8 @@ namespace OperationEagleGlass
             }
             if (hasRopeDeployment)
             {
-                Texture2D ropeTexture = ContentFinder<Texture2D>.Get("Effects/Rope", false);
-                if (ropeTexture == null)
-                {
-                    ropeMaterial = SolidColorMaterials.SimpleSolidColorMaterial(new Color(0.15f, 0.1f, 0.05f));
-                }
-                else
-                {
-                    ropeMaterial = MaterialPool.MatFrom("Effects/Rope", ShaderDatabase.Transparent);
-                }
+                leftRope = new Rope(-1f);
+                rightRope = new Rope(1f);
             }
         }
 
@@ -348,7 +334,6 @@ namespace OperationEagleGlass
             }
         }
 
-
         public void Depart()
         {
             if (this.Destroyed) return;
@@ -372,104 +357,68 @@ namespace OperationEagleGlass
         public void StartRopeDeployment()
         {
             isDeployingRope = true;
-            currentPawnIndex = 0;
-            ropeLength = 0f;
-            ropeState = RopeState.Extending;
         }
 
         private void TickRopeDeployment()
         {
             if (!isDeployingRope) return;
-            float targetRopeLength = this.DrawPos.z - this.Position.z;
 
-            if (ropeState == RopeState.Extending)
+            Vector3 heliPos = this.DrawPos;
+            heliPos.y = AltitudeLayer.Skyfaller.AltitudeFor();
+
+            leftRope.Tick(heliPos, this.Position, this.Map);
+            rightRope.Tick(heliPos, this.Position, this.Map);
+
+            if (this.IsHashIntervalTick(15))
             {
-                ropeLength += EXTEND_SPEED;
+                Vector3 dustPos = heliPos;
+                dustPos.x -= 1f;
+                dustPos.z -= leftRope.Length;
+                FleckMaker.ThrowDustPuffThick(dustPos, this.Map, 1.2f, Color.gray);
 
-                if (this.IsHashIntervalTick(15))
-                {
-                    Vector3 dustPos = this.DrawPos;
-                    dustPos.z -= ropeLength;
-                    FleckMaker.ThrowDustPuffThick(dustPos, this.Map, 1.2f, Color.gray);
-                }
-                if (ropeLength >= targetRopeLength)
-                {
-                    ropeLength = targetRopeLength;
-                    SpawnCurrentPawn();
-                    ropeState = RopeState.Retracting;
-                }
+                dustPos = heliPos;
+                dustPos.x += 1f;
+                dustPos.z -= rightRope.Length;
+                FleckMaker.ThrowDustPuffThick(dustPos, this.Map, 1.2f, Color.gray);
             }
-            else if (ropeState == RopeState.Retracting)
+
+            AssignPawnsToRopes();
+
+            if (pawnsToDeploy.Count == 0 && !leftRope.HasPawn && !rightRope.HasPawn)
             {
-                ropeLength -= RETRACT_SPEED;
-
-                if (ropeLength <= 0f)
-                {
-                    ropeLength = 0f;
-                    currentPawnIndex++;
-
-                    if (currentPawnIndex >= pawnsToDeploy.Count)
-                    {
-                        isDeployingRope = false;
-                        pawnsToDeploy.Clear();
-                    }
-                    else
-                    {
-                        ropeState = RopeState.Extending;
-                    }
-                }
+                leftRope.StartRetracting();
+                rightRope.StartRetracting();
             }
         }
 
-        private void SpawnCurrentPawn()
+        private void AssignPawnsToRopes()
         {
-            Pawn pawn = pawnsToDeploy[currentPawnIndex];
-            GenSpawn.Spawn(pawn, this.Position, this.Map);
-            FleckMaker.ThrowDustPuffThick(this.Position.ToVector3Shifted(), this.Map, 2f, Color.gray);
+            if (pawnsToDeploy.Count == 0) return;
+
+            if (leftRope.IsReady)
+            {
+                leftRope.AssignPawn(pawnsToDeploy[0]);
+                pawnsToDeploy.RemoveAt(0);
+            }
+
+            if (pawnsToDeploy.Count > 0 && rightRope.IsReady)
+            {
+                rightRope.AssignPawn(pawnsToDeploy[0]);
+                pawnsToDeploy.RemoveAt(0);
+            }
         }
 
         public override void DrawAt(Vector3 drawLoc, bool flipRot = false)
         {
             base.DrawAt(drawLoc, flipRot);
 
-            if (!isDeployingRope || ropeLength <= 0f) return;
+            if (!isDeployingRope) return;
+            
             Vector3 heliPos = drawLoc;
             heliPos.y = AltitudeLayer.Skyfaller.AltitudeFor();
-            Vector3 ropeBottom = heliPos;
-            ropeBottom.z -= ropeLength;
             
-            DrawRope(heliPos, ropeBottom);
-            if (ropeState == RopeState.Extending && currentPawnIndex < pawnsToDeploy.Count)
-            {
-                DrawPawnOnRope(pawnsToDeploy[currentPawnIndex], heliPos);
-            }
-        }
-
-        private void DrawRope(Vector3 top, Vector3 bottom)
-        {
-            float length = top.z - bottom.z;
-            Vector3 center = (top + bottom) / 2f;
-            center.y = AltitudeLayer.Skyfaller.AltitudeFor() - 0.1f;
-
-            Matrix4x4 matrix = Matrix4x4.TRS(
-                center,
-                Quaternion.identity,
-                new Vector3(0.2f, 1f, length)
-            );
-
-            Graphics.DrawMesh(MeshPool.plane10, matrix, ropeMaterial, 0);
-        }
-
-        private void DrawPawnOnRope(Pawn pawn, Vector3 heliPos)
-        {
-            Vector3 pawnPos = heliPos;
-            pawnPos.z -= ropeLength;
-            pawnPos.y = AltitudeLayer.Pawn.AltitudeFor();
-            if (pawn != null && !pawn.Destroyed)
-            {
-                Rot4 rotation = Rot4.South;
-                pawn.Drawer.renderer.DynamicDrawPhaseAt(DrawPhase.Draw, pawnPos, rotation);
-            }
+            leftRope.Draw(heliPos);
+            rightRope.Draw(heliPos);
         }
 
         public override void ExposeData()
@@ -481,11 +430,10 @@ namespace OperationEagleGlass
             Scribe_Values.Look(ref burstWarmupTicksLeft, "burstWarmupTicksLeft", 0);
             Scribe_TargetInfo.Look(ref currentTargetInt, "currentTarget");
             Scribe_Values.Look(ref hasRopeDeployment, "hasRopeDeployment", false);
-            Scribe_Collections.Look(ref pawnsToDeploy, "pawnsToDeploy", LookMode.Reference);
-            Scribe_Values.Look(ref currentPawnIndex, "currentPawnIndex", 0);
+            Scribe_Collections.Look(ref pawnsToDeploy, "pawnsToDeploy", LookMode.Deep);
             Scribe_Values.Look(ref isDeployingRope, "isDeployingRope", false);
-            Scribe_Values.Look(ref ropeLength, "ropeLength", 0f);
-            Scribe_Values.Look(ref ropeState, "ropeState", RopeState.Extending);
+            Scribe_Deep.Look(ref leftRope, "leftRope");
+            Scribe_Deep.Look(ref rightRope, "rightRope");
         }
     }
 }
