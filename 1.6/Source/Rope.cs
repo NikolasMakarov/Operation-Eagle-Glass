@@ -40,6 +40,10 @@ namespace OperationEagleGlass
             currentPawn = null;
             descentProgress = 0f;
         }
+        public Rope()
+        {
+            
+        }
         
         static Rope()
         {
@@ -146,6 +150,11 @@ namespace OperationEagleGlass
         
         private void DrawRope(Vector3 top, Vector3 bottom)
         {
+            if (cachedRopeMaterial == null)
+            {
+                InitializeMaterial();
+            }
+            
             float ropeLength = top.z - bottom.z;
             Vector3 center = (top + bottom) / 2f;
             center.y = AltitudeLayer.Skyfaller.AltitudeFor() - 0.1f;

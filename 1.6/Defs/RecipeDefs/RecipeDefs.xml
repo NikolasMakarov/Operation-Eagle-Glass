@@ -8,7 +8,7 @@
     <jobString>Installing helicopter control link.</jobString>
     <workAmount>2500</workAmount>
     <recipeUsers>
-      <li>OEG_TestMech</li>
+      <li>Mech_Scyther</li>
     </recipeUsers>
     <ingredients>
       <li>

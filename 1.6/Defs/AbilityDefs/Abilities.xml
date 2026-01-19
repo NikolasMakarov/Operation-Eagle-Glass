@@ -26,6 +26,12 @@
     <description>Call in a helicopter for fire support. The helicopter will hover and engage enemies for a limited time.</description>
     <iconPath>UI/OEG_helicopter_support</iconPath>
     <comps>
+      <li Class="OperationEagleGlass.CompProperties_AbilityResource">
+        <maxResources>
+          <Steel>100</Steel>
+          <ComponentIndustrial>10</ComponentIndustrial>
+        </maxResources>
+      </li>
       <li Class="OperationEagleGlass.CompProperties_AbilityCallHelicopter_Support">
         <skyfallerDef>OEG_HelicopterArriving_M5AOne</skyfallerDef>
         <durationTicks>1800</durationTicks>
@@ -43,6 +49,12 @@
     <description>Call in a helicopter to deploy mechanoid reinforcements.</description>
     <iconPath>UI/OEG_helicopter_transport</iconPath>
     <comps>
+      <li Class="OperationEagleGlass.CompProperties_AbilityResource">
+        <maxResources>
+          <Steel>200</Steel>
+          <ComponentIndustrial>20</ComponentIndustrial>
+        </maxResources>
+      </li>
       <li Class="OperationEagleGlass.CompProperties_AbilityCallHelicopter_Transport">
         <skyfallerDef>OEG_HelicopterArriving_M5AOne</skyfallerDef>
         <pawnsToDrop>
@@ -63,6 +75,12 @@
     <description>Call in a helicopter that deploys mechanoids and provides fire support.</description>
     <iconPath>UI/OEG_helicopter_reinforcement</iconPath>
     <comps>
+      <li Class="OperationEagleGlass.CompProperties_AbilityResource">
+        <maxResources>
+          <Steel>300</Steel>
+          <ComponentIndustrial>30</ComponentIndustrial>
+        </maxResources>
+      </li>
       <li Class="OperationEagleGlass.CompProperties_AbilityCallHelicopter_Reinforcement">
         <skyfallerDef>OEG_HelicopterArriving_M5ATwo</skyfallerDef>
         <pawnsToDrop>

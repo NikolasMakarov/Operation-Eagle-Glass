@@ -7,16 +7,16 @@ using Verse;
 
 namespace OperationEagleGlass
 {
-    public class Ability_CallHelicopter : Ability
+    public class Ability_CallHelicopter : Ability_Resource
     {
         public Ability_CallHelicopter() { }
-        
+
         public Ability_CallHelicopter(Pawn pawn) : base(pawn) { }
-        
+
         public Ability_CallHelicopter(Pawn pawn, Precept sourcePrecept) : base(pawn, sourcePrecept) { }
-        
+
         public Ability_CallHelicopter(Pawn pawn, AbilityDef def) : base(pawn, def) { }
-        
+
         public Ability_CallHelicopter(Pawn pawn, Precept sourcePrecept, AbilityDef def) : base(pawn, sourcePrecept, def) { }
 
         public override IEnumerable<Command> GetGizmos()

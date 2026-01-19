@@ -1,0 +1,17 @@
+using System.Collections.Generic;
+using RimWorld;
+using Verse;
+using Verse.AI;
+
+namespace OperationEagleGlass
+{
+    public class CompProperties_AbilityResource : CompProperties_AbilityEffect
+    {
+        public List<ThingDefCountClass> maxResources;
+
+        public CompProperties_AbilityResource()
+        {
+            compClass = typeof(CompAbilityEffect_Resource);
+        }
+    }
+}

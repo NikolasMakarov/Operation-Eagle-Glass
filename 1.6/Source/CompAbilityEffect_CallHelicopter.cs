@@ -1,4 +1,4 @@
-using RimWorld;
+﻿using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,28 +7,36 @@ using Verse;
 
 namespace OperationEagleGlass
 {
+    [HotSwappable]
     public abstract class CompAbilityEffect_CallHelicopter : CompAbilityEffect
     {
         public new CompProperties_AbilityCallHelicopter Props => (CompProperties_AbilityCallHelicopter)props;
         public Rot4? forcedRotation = null;
         public Skyfaller_Hovering skyfaller = null;
+
         public override bool Valid(LocalTargetInfo target, bool throwMessages = false)
         {
-            if (Props.costList != null)
+            var ability = parent as Ability_Resource;
+            if (ability != null && Props.costList != null)
             {
-                var resourceLoader = parent.pawn.TryGetComp<CompResourceLoader>();
-                if (resourceLoader != null)
+                foreach (var cost in Props.costList)
                 {
-                    foreach (var cost in Props.costList)
+                    var allAbilities = ability.GetAllResourceAbilities();
+                    foreach (var ab in allAbilities)
                     {
-                        int available = resourceLoader.ResourceCount(cost.thingDef);
-                        if (available < cost.count)
-                        {
-                            if (throwMessages)
-                                Messages.Message("OEG_NotEnoughResources".Translate(cost.thingDef.LabelCap, cost.count, available),
-                                    MessageTypeDefOf.RejectInput);
-                            return false;
-                        }
+                        int steelInThis = ab.innerContainer.TotalStackCountOfDef(cost.thingDef);
+                        Log.Message($"[OEG] Ability {ab.def.defName} has {steelInThis} {cost.thingDef.defName}");
+                    }
+
+                    int available = ability.ResourceCount(cost.thingDef);
+                    Log.Message($"[OEG] Valid check: need {cost.count} {cost.thingDef.defName}, have {available}");
+
+                    if (available < cost.count)
+                    {
+                        if (throwMessages)
+                            Messages.Message("OEG_NotEnoughResources".Translate(cost.thingDef.LabelCap, cost.count, available),
+                                MessageTypeDefOf.RejectInput);
+                        return false;
                     }
                 }
             }
@@ -38,18 +46,15 @@ namespace OperationEagleGlass
 
         public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
         {
-            if (Props.costList != null)
+            var ability = parent as Ability_Resource;
+            if (ability != null && Props.costList != null)
             {
-                var resourceLoader = parent.pawn.TryGetComp<CompResourceLoader>();
-                if (resourceLoader != null)
+                foreach (var cost in Props.costList)
                 {
-                    foreach (var cost in Props.costList)
+                    if (!ability.ConsumeResource(cost.thingDef, cost.count))
                     {
-                        if (!resourceLoader.ConsumeResource(cost.thingDef, cost.count))
-                        {
-                            Messages.Message("OEG_FailedToConsumeResources".Translate(), MessageTypeDefOf.RejectInput);
-                            return;
-                        }
+                        Messages.Message("OEG_FailedToConsumeResources".Translate(), MessageTypeDefOf.RejectInput);
+                        return;
                     }
                 }
             }
