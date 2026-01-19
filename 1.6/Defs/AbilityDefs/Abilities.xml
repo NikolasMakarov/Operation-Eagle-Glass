@@ -15,7 +15,6 @@
       </targetParams>
     </verbProperties>
     <cooldownTicksRange>600</cooldownTicksRange>
-    <iconPath>UI/Abilities/CallHelicopter</iconPath>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
     <displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
     <disableGizmoWhileUndrafted>false</disableGizmoWhileUndrafted>
@@ -25,6 +24,7 @@
     <defName>OEG_CallHelicopterSupport</defName>
     <label>call helicopter support</label>
     <description>Call in a helicopter for fire support. The helicopter will hover and engage enemies for a limited time.</description>
+    <iconPath>UI/OEG_helicopter_support</iconPath>
     <comps>
       <li Class="OperationEagleGlass.CompProperties_AbilityCallHelicopter_Support">
         <skyfallerDef>OEG_HelicopterArriving_M5AOne</skyfallerDef>
@@ -41,6 +41,7 @@
     <defName>OEG_CallHelicopterTransport</defName>
     <label>call helicopter transport</label>
     <description>Call in a helicopter to deploy mechanoid reinforcements.</description>
+    <iconPath>UI/OEG_helicopter_transport</iconPath>
     <comps>
       <li Class="OperationEagleGlass.CompProperties_AbilityCallHelicopter_Transport">
         <skyfallerDef>OEG_HelicopterArriving_M5AOne</skyfallerDef>
@@ -60,6 +61,7 @@
     <defName>OEG_CallHelicopterReinforcement</defName>
     <label>call helicopter reinforcement</label>
     <description>Call in a helicopter that deploys mechanoids and provides fire support.</description>
+    <iconPath>UI/OEG_helicopter_reinforcement</iconPath>
     <comps>
       <li Class="OperationEagleGlass.CompProperties_AbilityCallHelicopter_Reinforcement">
         <skyfallerDef>OEG_HelicopterArriving_M5ATwo</skyfallerDef>
