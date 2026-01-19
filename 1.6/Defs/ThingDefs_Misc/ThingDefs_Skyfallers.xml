@@ -36,6 +36,7 @@
     <skyfaller>
       <rotateGraphicTowardsDirection>true</rotateGraphicTowardsDirection>
       <movementType>Decelerate</movementType>
+      <floatingSound>OEG_Helicopter_Sustain</floatingSound>
       <speedCurve>
         <points>
           <li>(0, 1.8)</li>
@@ -107,8 +108,7 @@
       <shadow>Things/Skyfaller/SkyfallerShadowCircle</shadow>
       <shadowSize>(5,5)</shadowSize>
       <motesPerCell>1</motesPerCell>
-      <anticipationSound>DropPod_Leaving</anticipationSound>
-      <anticipationSoundTicks>-10</anticipationSoundTicks>
+      <floatingSound>OEG_Helicopter_Sustain</floatingSound>
       <ticksToImpactRange>
         <min>-150</min>
         <max>-150</max>
