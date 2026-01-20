@@ -11,7 +11,7 @@
       <li>
         <grains>
           <li Class="AudioGrain_Clip">
-            <clipPath>Vehicles/huey_sound_long</clipPath>
+            <clipPath>Vehicles/OEG_apache_sound_long</clipPath>
           </li>
         </grains>
         <volumeRange>18</volumeRange>
