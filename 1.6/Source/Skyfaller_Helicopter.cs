@@ -23,6 +23,7 @@ namespace OperationEagleGlass
         private Rope leftRope;
         private Rope rightRope;
         public bool hasRopeDeployment = false;
+        private Graphic gunGraphic;
 
         public bool IsRopeDeploymentComplete => leftRope != null && rightRope != null && leftRope.IsComplete && rightRope.IsComplete && pawnsToDeploy.Count == 0;
 
@@ -36,6 +37,12 @@ namespace OperationEagleGlass
             }
         }
 
+        public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
+        {
+            base.Destroy(mode);
+            Log.Message("Destroying " + this);
+        }
+
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, respawningAfterLoad);
@@ -43,6 +50,14 @@ namespace OperationEagleGlass
             {
                 leftRope = new Rope(-1f);
                 rightRope = new Rope(1f);
+            }
+            var ext = def.GetModExtension<HelicopterSkyfallerExtension>();
+            if (ext != null && ext.gunGraphic != null)
+            {
+                LongEventHandler.ExecuteWhenFinished(delegate
+                {
+                    gunGraphic = ext.gunGraphic.Graphic;
+                });
             }
         }
 
@@ -88,7 +103,7 @@ namespace OperationEagleGlass
 
         public override void Impact()
         {
-            base.Impact();
+            hasImpacted = true;
             if (hasRopeDeployment && pawnsToDeploy.Count > 0 && !isDeployingRope)
             {
                 StartRopeDeployment();
@@ -100,15 +115,15 @@ namespace OperationEagleGlass
             Depart();
         }
 
-        protected override void BeginBurst()
+        protected override void BeginBurst(Verb verb)
         {
-            if (currentTargetInt.IsValid)
+            if (verbTargets[verb].IsValid)
             {
                 if (ammoComp != null && ammoComp.HasAmmo(1))
                 {
                     if (ammoComp.ConsumeAmmo(1))
                     {
-                        AttackVerb.TryStartCastOn(currentTargetInt);
+                        verb.TryStartCastOn(verbTargets[verb]);
                     }
                     else
                     {
@@ -238,6 +253,11 @@ namespace OperationEagleGlass
         public override void DrawAt(Vector3 drawLoc, bool flipRot = false)
         {
             base.DrawAt(drawLoc, flipRot);
+
+            if (gunGraphic != null)
+            {
+                gunGraphic.Draw(drawLoc, base.Rotation, this);
+            }
 
             if (!isDeployingRope) return;
 

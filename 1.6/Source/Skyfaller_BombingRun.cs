@@ -5,7 +5,7 @@ using Verse.Sound;
 namespace OperationEagleGlass
 {
     [HotSwappable]
-    public class Skyfaller_StrafingRun : Skyfaller_LinearRun
+    public class Skyfaller_BombingRun : Skyfaller_LinearRun
     {
         protected override void FireProjectile(Verb verb)
         {
@@ -15,12 +15,7 @@ namespace OperationEagleGlass
             }
 
             Vector3 spawnPos = DrawPos;
-
-            var widthInt = (int)width;
-            var forwardOffset = (direction * 10).ToIntVec3();
-            var perpendicularDir = new Vector3(direction.z, 0, -direction.x);
-            var perpendicularOffset = (perpendicularDir * Rand.Range(-widthInt, widthInt)).ToIntVec3();
-            var targetCell = currentPos.ToIntVec3() + forwardOffset + perpendicularOffset;
+            var targetCell = currentPos.ToIntVec3();
 
             var projectile = (Projectile)GenSpawn.Spawn(verb.verbProps.defaultProjectile, currentPos.ToIntVec3(), Map);
             projectile.Launch(null, spawnPos, targetCell, targetCell, ProjectileHitFlags.IntendedTarget);

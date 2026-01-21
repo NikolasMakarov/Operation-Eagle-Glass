@@ -26,9 +26,11 @@
     <description>Call in a helicopter for fire support. The helicopter will hover and engage enemies for a limited time.</description>
     <iconPath>UI/OEG_helicopter_support</iconPath>
     <comps>
-      <li Class="OperationEagleGlass.CompProperties_AbilityCallHelicopter_Support">
-        <skyfallerDef>OEG_HelicopterArriving_M5AOne</skyfallerDef>
+      <li Class="OperationEagleGlass.CompProperties_AbilityCallHelicopter">
+        <skyfallerDef>OEG_HelicopterArriving_Apache</skyfallerDef>
         <durationTicks>1800</durationTicks>
+        <abilityType>Support</abilityType>
+        <hasRopeDeployment>false</hasRopeDeployment>
         <costList>
           <Steel>50</Steel>
           <ComponentIndustrial>5</ComponentIndustrial>
@@ -47,12 +49,14 @@
     <description>Call in a helicopter to deploy mechanoid reinforcements.</description>
     <iconPath>UI/OEG_helicopter_transport</iconPath>
     <comps>
-      <li Class="OperationEagleGlass.CompProperties_AbilityCallHelicopter_Transport">
-        <skyfallerDef>OEG_HelicopterArriving_M5AOne</skyfallerDef>
+      <li Class="OperationEagleGlass.CompProperties_AbilityCallHelicopter">
+        <skyfallerDef>OEG_HelicopterArriving_Blackhawk</skyfallerDef>
         <pawnsToDrop>
           <Mech_CentipedeBlaster>2</Mech_CentipedeBlaster>
           <Mech_Lancer>2</Mech_Lancer>
         </pawnsToDrop>
+        <abilityType>Transport</abilityType>
+        <hasRopeDeployment>true</hasRopeDeployment>
         <costList>
           <Steel>100</Steel>
           <ComponentIndustrial>10</ComponentIndustrial>
@@ -71,13 +75,15 @@
     <description>Call in a helicopter that deploys mechanoids and provides fire support.</description>
     <iconPath>UI/OEG_helicopter_reinforcement</iconPath>
     <comps>
-      <li Class="OperationEagleGlass.CompProperties_AbilityCallHelicopter_Reinforcement">
-        <skyfallerDef>OEG_HelicopterArriving_M5ATwo</skyfallerDef>
+      <li Class="OperationEagleGlass.CompProperties_AbilityCallHelicopter">
+        <skyfallerDef>OEG_HelicopterArriving_Blackhawk</skyfallerDef>
         <pawnsToDrop>
           <Mech_Lancer>2</Mech_Lancer>
           <Mech_CentipedeBlaster>2</Mech_CentipedeBlaster>
         </pawnsToDrop>
         <durationTicks>1800</durationTicks>
+        <abilityType>Reinforcement</abilityType>
+        <hasRopeDeployment>true</hasRopeDeployment>
         <costList>
           <Steel>150</Steel>
           <ComponentIndustrial>15</ComponentIndustrial>
@@ -117,8 +123,8 @@
     <comps>
       <li Class="OperationEagleGlass.CompProperties_AbilityStrafingRun">
         <skyfallerDef>OEG_StrafingRunSkyfaller_MachineGun</skyfallerDef>
-        <height>50</height>
-        <width>5</width>
+        <height>30</height>
+        <width>7</width>
         <costList>
           <Steel>50</Steel>
           <ComponentIndustrial>5</ComponentIndustrial>
@@ -139,8 +145,8 @@
     <comps>
       <li Class="OperationEagleGlass.CompProperties_AbilityStrafingRun">
         <skyfallerDef>OEG_StrafingRunSkyfaller_Autocannon</skyfallerDef>
-        <height>50</height>
-        <width>5</width>
+        <height>30</height>
+        <width>7</width>
         <costList>
           <Steel>100</Steel>
           <ComponentIndustrial>10</ComponentIndustrial>
@@ -161,8 +167,8 @@
     <comps>
       <li Class="OperationEagleGlass.CompProperties_AbilityStrafingRun">
         <skyfallerDef>OEG_StrafingRunSkyfaller_Rockets</skyfallerDef>
-        <height>50</height>
-        <width>5</width>
+        <height>30</height>
+        <width>7</width>
         <costList>
           <Steel>150</Steel>
           <ComponentIndustrial>15</ComponentIndustrial>
@@ -171,6 +177,176 @@
           <Steel>150</Steel>
           <ComponentIndustrial>15</ComponentIndustrial>
         </maxResources>
+      </li>
+    </comps>
+  </AbilityDef>
+
+  <AbilityDef Name="OEG_BombingRunBase" Abstract="True">
+    <gizmoClass>Command_Ability</gizmoClass>
+    <abilityClass>OperationEagleGlass.Ability_Resource</abilityClass>
+    <verbProperties>
+      <verbClass>OperationEagleGlass.Verb_BombingRun</verbClass>
+      <range>999</range>
+      <warmupTime>0</warmupTime>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetPawns>false</canTargetPawns>
+        <canTargetBuildings>false</canTargetBuildings>
+      </targetParams>
+    </verbProperties>
+    <cooldownTicksRange>600</cooldownTicksRange>
+    <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
+    <displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
+    <disableGizmoWhileUndrafted>false</disableGizmoWhileUndrafted>
+  </AbilityDef>
+
+  <AbilityDef ParentName="OEG_BombingRunBase">
+    <defName>OEG_BombingRun_I</defName>
+    <label>bombing run</label>
+    <description>Calls in a bombing run with explosive bombs.</description>
+    <iconPath>UI/OEG_heavybombingrun_I</iconPath>
+    <comps>
+      <li Class="OperationEagleGlass.CompProperties_AbilityBombingRun">
+        <skyfallerDef>OEG_BombingRunSkyfaller_Basic</skyfallerDef>
+        <height>50</height>
+        <width>5</width>
+        <planeCount>1</planeCount>
+        <planeSpacing>5</planeSpacing>
+        <costList>
+          <Steel>50</Steel>
+          <ComponentIndustrial>5</ComponentIndustrial>
+        </costList>
+        <maxResources>
+          <Steel>50</Steel>
+          <ComponentIndustrial>5</ComponentIndustrial>
+        </maxResources>
+      </li>
+    </comps>
+  </AbilityDef>
+
+  <AbilityDef ParentName="OEG_BombingRunBase">
+    <defName>OEG_BombingRun_II</defName>
+    <label>bombing run II</label>
+    <description>Calls in a bombing run with incendiary bombs that start fires.</description>
+    <iconPath>UI/OEG_heavybombingrun_I</iconPath>
+    <comps>
+      <li Class="OperationEagleGlass.CompProperties_AbilityBombingRun">
+        <skyfallerDef>OEG_BombingRunSkyfaller_Incendiary</skyfallerDef>
+        <height>50</height>
+        <width>5</width>
+        <planeCount>1</planeCount>
+        <planeSpacing>5</planeSpacing>
+        <costList>
+          <Steel>100</Steel>
+          <ComponentIndustrial>10</ComponentIndustrial>
+        </costList>
+        <maxResources>
+          <Steel>100</Steel>
+          <ComponentIndustrial>10</ComponentIndustrial>
+        </maxResources>
+      </li>
+    </comps>
+  </AbilityDef>
+
+  <AbilityDef ParentName="OEG_BombingRunBase">
+    <defName>OEG_BombingRun_III</defName>
+    <label>bombing run III</label>
+    <description>Calls in a bombing run with 3 planes side by side for wider coverage.</description>
+    <iconPath>UI/OEG_heavybombingrun_I</iconPath>
+    <comps>
+      <li Class="OperationEagleGlass.CompProperties_AbilityBombingRun">
+        <skyfallerDef>OEG_BombingRunSkyfaller_Wide</skyfallerDef>
+        <height>50</height>
+        <width>5</width>
+        <planeCount>3</planeCount>
+        <planeSpacing>5</planeSpacing>
+        <costList>
+          <Steel>150</Steel>
+          <ComponentIndustrial>15</ComponentIndustrial>
+        </costList>
+        <maxResources>
+          <Steel>150</Steel>
+          <ComponentIndustrial>15</ComponentIndustrial>
+        </maxResources>
+      </li>
+    </comps>
+  </AbilityDef>
+
+  <AbilityDef ParentName="OEG_BombingRunBase">
+    <defName>OEG_BombingRun_IV</defName>
+    <label>bombing run IV</label>
+    <description>Calls in a bombing run with a single nuclear bomb that causes massive destruction, pollutes the ground, and creates toxic fallout.</description>
+    <iconPath>UI/OEG_heavybombingrun_I</iconPath>
+    <comps>
+      <li Class="OperationEagleGlass.CompProperties_AbilityBombingRun">
+        <skyfallerDef>OEG_BombingRunSkyfaller_Nuclear</skyfallerDef>
+        <height>50</height>
+        <width>5</width>
+        <planeCount>1</planeCount>
+        <planeSpacing>5</planeSpacing>
+        <costList>
+          <Steel>200</Steel>
+          <ComponentIndustrial>20</ComponentIndustrial>
+        </costList>
+        <maxResources>
+          <Steel>200</Steel>
+          <ComponentIndustrial>20</ComponentIndustrial>
+        </maxResources>
+      </li>
+    </comps>
+  </AbilityDef>
+
+  <AbilityDef Name="OEG_ParadropBase" Abstract="True">
+    <gizmoClass>Command_Ability</gizmoClass>
+    <abilityClass>OperationEagleGlass.Ability_Resource</abilityClass>
+    <verbProperties>
+      <verbClass>OperationEagleGlass.Verb_Paradrop</verbClass>
+      <range>999</range>
+      <warmupTime>0</warmupTime>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetPawns>false</canTargetPawns>
+        <canTargetBuildings>false</canTargetBuildings>
+      </targetParams>
+    </verbProperties>
+    <cooldownTicksRange>600</cooldownTicksRange>
+    <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
+    <displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
+    <disableGizmoWhileUndrafted>false</disableGizmoWhileUndrafted>
+  </AbilityDef>
+
+  <AbilityDef ParentName="OEG_ParadropBase">
+    <defName>OEG_Paradrop_I</defName>
+    <label>paradrop</label>
+    <description>Calls in a cargo plane to drop 6 light mechanoids in a line.</description>
+    <iconPath>UI/OEG_paradrop_I</iconPath>
+    <comps>
+      <li Class="OperationEagleGlass.CompProperties_AbilityParadrop">
+        <skyfallerDef>OEG_ParadropSkyfaller</skyfallerDef>
+        <height>40</height>
+        <width>3</width>
+        <dropIntervalTicks>25</dropIntervalTicks>
+        <pawnsToDrop><Mech_Lancer>6</Mech_Lancer></pawnsToDrop>
+        <costList><Steel>120</Steel><ComponentIndustrial>12</ComponentIndustrial></costList>
+        <maxResources><Steel>120</Steel><ComponentIndustrial>12</ComponentIndustrial></maxResources>
+      </li>
+    </comps>
+  </AbilityDef>
+
+  <AbilityDef ParentName="OEG_ParadropBase">
+    <defName>OEG_AssaultParadrop</defName>
+    <label>assault paradrop</label>
+    <description>Calls in a cargo plane to drop 2 heavy mechanoids in a line.</description>
+    <iconPath>UI/OEG_heavyparadrop_II</iconPath>
+    <comps>
+      <li Class="OperationEagleGlass.CompProperties_AbilityParadrop">
+        <skyfallerDef>OEG_ParadropSkyfaller</skyfallerDef>
+        <height>40</height>
+        <width>3</width>
+        <dropIntervalTicks>50</dropIntervalTicks>
+        <pawnsToDrop><Mech_CentipedeBlaster>2</Mech_CentipedeBlaster></pawnsToDrop>
+        <costList><Steel>250</Steel><ComponentIndustrial>25</ComponentIndustrial></costList>
+        <maxResources><Steel>250</Steel><ComponentIndustrial>25</ComponentIndustrial></maxResources>
       </li>
     </comps>
   </AbilityDef>

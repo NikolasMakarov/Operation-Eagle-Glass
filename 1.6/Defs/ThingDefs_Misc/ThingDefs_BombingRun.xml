@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>OEG_Bomb_Basic</defName>
+    <label>bomb</label>
+    <graphicData>
+      <texPath>Things/Projectile/Rocket_Big</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>TransparentPostLight</shaderType>
+    </graphicData>
+    <thingClass>Projectile_Explosive</thingClass>
+    <projectile>
+      <damageDef>Bomb</damageDef>
+      <explosionRadius>2.9</explosionRadius>
+      <speed>50</speed>
+    </projectile>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>OEG_Bomb_Incendiary</defName>
+    <label>incendiary bomb</label>
+    <graphicData>
+      <texPath>Things/Projectile/Rocket_Big</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>TransparentPostLight</shaderType>
+    </graphicData>
+    <thingClass>Projectile_Explosive</thingClass>
+    <projectile>
+      <damageDef>Flame</damageDef>
+      <explosionRadius>2.9</explosionRadius>
+      <explosionChanceToStartFire>0.5</explosionChanceToStartFire>
+      <speed>50</speed>
+    </projectile>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>OEG_Bomb_Nuclear</defName>
+    <label>nuclear bomb</label>
+    <graphicData>
+      <texPath>Things/Projectile/Rocket_Big</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>TransparentPostLight</shaderType>
+    </graphicData>
+    <thingClass>OperationEagleGlass.Projectile_NuclearBomb</thingClass>
+    <projectile>
+      <damageDef>Bomb</damageDef>
+      <explosionRadius>14.9</explosionRadius>
+      <damageAmountBase>250</damageAmountBase>
+      <explosionChanceToStartFire>0.8</explosionChanceToStartFire>
+      <speed>50</speed>
+    </projectile>
+  </ThingDef>
+
+  <ThingDef Name="OEG_BombingRunSkyfallerBase" ParentName="SkyfallerBase" Abstract="True">
+    <label>bombing run</label>
+    <thingClass>OperationEagleGlass.Skyfaller_BombingRun</thingClass>
+    <graphicData>
+      <texPath>Things/Skyfaller/SkyfallerShadowCircle</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>Transparent</shaderType>
+      <drawSize>(6,6)</drawSize>
+    </graphicData>
+    <skyfaller>
+      <speed>0.5</speed>
+      <floatingSound>OEG_StrafingRun_Sustain</floatingSound>
+      <reversed>true</reversed>
+    </skyfaller>
+  </ThingDef>
+
+  <ThingDef ParentName="OEG_BombingRunSkyfallerBase">
+    <defName>OEG_BombingRunSkyfaller_Basic</defName>
+    <verbs>
+      <li>
+        <verbClass>Verb_Shoot</verbClass>
+        <hasStandardCommand>false</hasStandardCommand>
+        <defaultProjectile>OEG_Bomb_Basic</defaultProjectile>
+        <warmupTime>0</warmupTime>
+        <forcedMissRadius>2.9</forcedMissRadius>
+        <range>999</range>
+        <burstShotCount>5</burstShotCount>
+        <ticksBetweenBurstShots>15</ticksBetweenBurstShots>
+        <soundCast>Shot_ChargeRifle</soundCast>
+        <soundCastTail>GunTail_Medium</soundCastTail>
+        <muzzleFlashScale>9</muzzleFlashScale>
+      </li>
+    </verbs>
+  </ThingDef>
+
+  <ThingDef ParentName="OEG_BombingRunSkyfallerBase">
+    <defName>OEG_BombingRunSkyfaller_Incendiary</defName>
+    <verbs>
+      <li>
+        <verbClass>Verb_Shoot</verbClass>
+        <hasStandardCommand>false</hasStandardCommand>
+        <defaultProjectile>OEG_Bomb_Incendiary</defaultProjectile>
+        <warmupTime>0</warmupTime>
+        <forcedMissRadius>2.9</forcedMissRadius>
+        <range>999</range>
+        <burstShotCount>5</burstShotCount>
+        <ticksBetweenBurstShots>15</ticksBetweenBurstShots>
+        <soundCast>Shot_ChargeRifle</soundCast>
+        <soundCastTail>GunTail_Medium</soundCastTail>
+        <muzzleFlashScale>9</muzzleFlashScale>
+      </li>
+    </verbs>
+  </ThingDef>
+
+  <ThingDef ParentName="OEG_BombingRunSkyfallerBase">
+    <defName>OEG_BombingRunSkyfaller_Wide</defName>
+    <verbs>
+      <li>
+        <verbClass>Verb_Shoot</verbClass>
+        <hasStandardCommand>false</hasStandardCommand>
+        <defaultProjectile>OEG_Bomb_Basic</defaultProjectile>
+        <warmupTime>0</warmupTime>
+        <forcedMissRadius>2.9</forcedMissRadius>
+        <range>999</range>
+        <burstShotCount>5</burstShotCount>
+        <ticksBetweenBurstShots>15</ticksBetweenBurstShots>
+        <soundCast>Shot_ChargeRifle</soundCast>
+        <soundCastTail>GunTail_Medium</soundCastTail>
+        <muzzleFlashScale>9</muzzleFlashScale>
+      </li>
+    </verbs>
+  </ThingDef>
+
+  <ThingDef ParentName="OEG_BombingRunSkyfallerBase">
+    <defName>OEG_BombingRunSkyfaller_Nuclear</defName>
+    <verbs>
+      <li>
+        <verbClass>Verb_Shoot</verbClass>
+        <hasStandardCommand>false</hasStandardCommand>
+        <defaultProjectile>OEG_Bomb_Nuclear</defaultProjectile>
+        <warmupTime>0</warmupTime>
+        <forcedMissRadius>2.9</forcedMissRadius>
+        <range>999</range>
+        <burstShotCount>1</burstShotCount>
+        <ticksBetweenBurstShots>20</ticksBetweenBurstShots>
+        <soundCast>Shot_ChargeRifle</soundCast>
+        <soundCastTail>GunTail_Heavy</soundCastTail>
+        <muzzleFlashScale>14</muzzleFlashScale>
+      </li>
+    </verbs>
+  </ThingDef>
+
+</Defs>

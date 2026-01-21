@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="SkyfallerBase">
+    <defName>OEG_ParachutingPawn</defName>
+    <label>parachutist</label>
+    <thingClass>OperationEagleGlass.Skyfaller_ParachutingPawn</thingClass>
+    <graphicData>
+      <texPath>Things/Special/Parachute</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <skyfaller>
+      <speed>0.8</speed>
+      <shadowSize>0</shadowSize>
+      <motesPerCell>0</motesPerCell>
+      <ticksToImpactRange><min>180</min><max>220</max></ticksToImpactRange>
+      <speedCurve>
+        <points>
+          <li>(0.0, 4.0)</li>
+          <li>(0.4, 3.5)</li>
+          <li>(0.45, 0.2)</li>
+          <li>(1.0, 0.2)</li>
+        </points>
+      </speedCurve>
+    </skyfaller>
+    <modExtensions>
+      <li Class="OperationEagleGlass.ParachutingPawnExtension">
+        <parachuteVerticalOffset>1.5</parachuteVerticalOffset>
+      </li>
+    </modExtensions>
+  </ThingDef>
+  
+  <ThingDef ParentName="SkyfallerBase">
+    <defName>OEG_ParadropSkyfaller</defName>
+    <label>paradrop run</label>
+    <thingClass>OperationEagleGlass.Skyfaller_Paradrop</thingClass>
+    <graphicData>
+      <texPath>Things/Skyfaller/SkyfallerShadowCircle</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>Transparent</shaderType>
+      <drawSize>(8,8)</drawSize>
+    </graphicData>
+    <skyfaller>
+      <speed>0.35</speed>
+      <floatingSound>OEG_StrafingRun_Sustain</floatingSound>
+      <reversed>true</reversed>
+    </skyfaller>
+  </ThingDef>
+
+</Defs>

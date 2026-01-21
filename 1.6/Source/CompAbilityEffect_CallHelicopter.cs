@@ -6,7 +6,7 @@ using Verse;
 namespace OperationEagleGlass
 {
     [HotSwappable]
-    public abstract class CompAbilityEffect_CallHelicopter : CompAbilityEffect_ResourceBase
+    public class CompAbilityEffect_CallHelicopter : CompAbilityEffect_ResourceBase
     {
         public new CompProperties_AbilityCallHelicopter Props => (CompProperties_AbilityCallHelicopter)props;
         public Rot4? forcedRotation = null;
@@ -17,7 +17,23 @@ namespace OperationEagleGlass
         {
             base.Apply(target, dest);
             var newSkyfaller = SkyfallerMaker.MakeSkyfaller(Props.skyfallerDef);
-            PostHelicopterSpawn(newSkyfaller);
+            if (newSkyfaller is Skyfaller_Helicopter hoveringHeli)
+            {
+                hoveringHeli.abilityType = Props.abilityType;
+                hoveringHeli.duration = Props.durationTicks;
+                hoveringHeli.hasRopeDeployment = Props.hasRopeDeployment;
+                if (Props.pawnsToDrop != null)
+                {
+                    foreach (var pawnOption in Props.pawnsToDrop)
+                    {
+                        for (int i = 0; i < pawnOption.count; i++)
+                        {
+                            Pawn mech = PawnGenerator.GeneratePawn(pawnOption.kind, Faction.OfPlayer);
+                            hoveringHeli.AddPawnToDeploy(mech);
+                        }
+                    }
+                }
+            }
             Rot4 spawnRot = forcedRotation ?? Rot4.South;
             GenSpawn.Spawn(newSkyfaller, target.Cell, parent.pawn.Map, spawnRot);
             forcedRotation = null;
@@ -29,15 +45,20 @@ namespace OperationEagleGlass
             base.PostExposeData();
             Scribe_References.Look(ref skyfaller, "skyfaller");
         }
-
-        protected abstract void PostHelicopterSpawn(Thing helicopter);
     }
 
     public class CompProperties_AbilityCallHelicopter : CompProperties_AbilityEffect_ResourceBase
     {
+        public CompProperties_AbilityCallHelicopter()
+        {
+            compClass = typeof(CompAbilityEffect_CallHelicopter);
+        }
+
         public ThingDef skyfallerDef;
         public int durationTicks;
         public List<PawnGenOption> pawnsToDrop;
+        public VehicleAbility abilityType;
+        public bool hasRopeDeployment;
     }
 
     public class PawnGenOption

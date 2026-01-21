@@ -50,6 +50,18 @@
         <soundCastTail>GunTail_Medium</soundCastTail>
         <muzzleFlashScale>12</muzzleFlashScale>
       </li>
+      <li>
+        <verbClass>Verb_Shoot</verbClass>
+        <hasStandardCommand>false</hasStandardCommand>
+        <defaultProjectile>Bullet_Minigun</defaultProjectile>
+        <warmupTime>0</warmupTime>
+        <range>999</range>
+        <burstShotCount>10</burstShotCount>
+        <ticksBetweenBurstShots>5</ticksBetweenBurstShots>
+        <soundCast>Shot_Minigun</soundCast>
+        <soundCastTail>GunTail_Medium</soundCastTail>
+        <muzzleFlashScale>9</muzzleFlashScale>
+      </li>
     </verbs>
   </ThingDef>
 
@@ -62,12 +74,24 @@
         <defaultProjectile>Bullet_Rocket</defaultProjectile>
         <warmupTime>0</warmupTime>
         <range>999</range>
-        <burstShotCount>3</burstShotCount>
+        <burstShotCount>1</burstShotCount>
         <ticksBetweenBurstShots>20</ticksBetweenBurstShots>
         <soundCast>RocketswarmLauncher_Fire</soundCast>
         <soundCastTail>GunTail_Heavy</soundCastTail>
         <muzzleFlashScale>14</muzzleFlashScale>
         <forcedMissRadius>2.9</forcedMissRadius>
+      </li>
+      <li>
+        <verbClass>Verb_Shoot</verbClass>
+        <hasStandardCommand>false</hasStandardCommand>
+        <defaultProjectile>Bullet_Minigun</defaultProjectile>
+        <warmupTime>0</warmupTime>
+        <range>999</range>
+        <burstShotCount>10</burstShotCount>
+        <ticksBetweenBurstShots>5</ticksBetweenBurstShots>
+        <soundCast>Shot_Minigun</soundCast>
+        <soundCastTail>GunTail_Medium</soundCastTail>
+        <muzzleFlashScale>9</muzzleFlashScale>
       </li>
     </verbs>
   </ThingDef>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
   <ThingDef Name="OEG_HelicopterArriving_Base" ParentName="SkyfallerBase" Abstract="True">
@@ -7,7 +7,7 @@
     <graphicData>
       <graphicClass>Graphic_Multi</graphicClass>
       <shaderType>CutoutFlying</shaderType>
-      <drawSize>(5,5)</drawSize>
+      <drawSize>(7,7)</drawSize>
     </graphicData>
     <size>(5,5)</size>
     <tickerType>Normal</tickerType>
@@ -69,25 +69,31 @@
   </ThingDef>
 
   <ThingDef ParentName="OEG_HelicopterArriving_Base">
-    <defName>OEG_HelicopterArriving_M5AOne</defName>
+    <defName>OEG_HelicopterArriving_Apache</defName>
     <graphicData>
-      <texPath>Things/Vehicle/M5A1</texPath>
+      <texPath>Things/Vehicle/OEG_Apache/OEG_Apache</texPath>
     </graphicData>
     <modExtensions>
       <li Class="OperationEagleGlass.HelicopterSkyfallerExtension">
-        <leavingSkyfaller>OEG_HelicopterLeaving_M5AOne</leavingSkyfaller>
+        <leavingSkyfaller>OEG_HelicopterLeaving_Apache</leavingSkyfaller>
+        <gunGraphic>
+          <texPath>Things/Vehicle/OEG_Apache/OEG_Apache_gun</texPath>
+          <graphicClass>Graphic_Single</graphicClass>
+          <shaderType>CutoutFlying</shaderType>
+          <drawSize>(7,7)</drawSize>
+        </gunGraphic>
       </li>
     </modExtensions>
   </ThingDef>
 
   <ThingDef ParentName="OEG_HelicopterArriving_Base">
-    <defName>OEG_HelicopterArriving_M5ATwo</defName>
+    <defName>OEG_HelicopterArriving_Blackhawk</defName>
     <graphicData>
-      <texPath>Things/Vehicle/M5A2</texPath>
+      <texPath>Things/Vehicle/OEG_Blackhawk/OEG_Blackhawk</texPath>
     </graphicData>
     <modExtensions>
       <li Class="OperationEagleGlass.HelicopterSkyfallerExtension">
-        <leavingSkyfaller>OEG_HelicopterLeaving_M5ATwo</leavingSkyfaller>
+        <leavingSkyfaller>OEG_HelicopterLeaving_Blackhawk</leavingSkyfaller>
       </li>
     </modExtensions>
   </ThingDef>
@@ -98,7 +104,7 @@
     <graphicData>
       <graphicClass>Graphic_Multi</graphicClass>
       <shaderType>CutoutFlying</shaderType>
-      <drawSize>(5,5)</drawSize>
+      <drawSize>(7,7)</drawSize>
     </graphicData>
     <size>(5,5)</size>
     <skyfaller>
@@ -141,16 +147,26 @@
   </ThingDef>
 
   <ThingDef ParentName="OEG_HelicopterLeaving_Base">
-    <defName>OEG_HelicopterLeaving_M5AOne</defName>
+    <defName>OEG_HelicopterLeaving_Apache</defName>
     <graphicData>
-      <texPath>Things/Vehicle/M5A1</texPath>
+      <texPath>Things/Vehicle/OEG_Apache/OEG_Apache</texPath>
     </graphicData>
+    <modExtensions>
+      <li Class="OperationEagleGlass.HelicopterSkyfallerExtension">
+        <gunGraphic>
+          <texPath>Things/Vehicle/OEG_Apache/OEG_Apache_gun</texPath>
+          <graphicClass>Graphic_Single</graphicClass>
+          <shaderType>CutoutFlying</shaderType>
+          <drawSize>(7,7)</drawSize>
+        </gunGraphic>
+      </li>
+    </modExtensions>
   </ThingDef>
 
   <ThingDef ParentName="OEG_HelicopterLeaving_Base">
-    <defName>OEG_HelicopterLeaving_M5ATwo</defName>
+    <defName>OEG_HelicopterLeaving_Blackhawk</defName>
     <graphicData>
-      <texPath>Things/Vehicle/M5A2</texPath>
+      <texPath>Things/Vehicle/OEG_Blackhawk/OEG_Blackhawk</texPath>
     </graphicData>
   </ThingDef>
 
