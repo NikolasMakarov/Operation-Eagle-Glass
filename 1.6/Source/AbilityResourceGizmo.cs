@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
@@ -67,7 +67,7 @@ namespace OperationEagleGlass
 
             var firstAbility = abilities.First();
             var resourceTypes = abilities
-                .SelectMany(a => a.maxResources)
+                .SelectMany(a => a.MaxResources)
                 .Select(r => r.thingDef)
                 .Distinct();
 
@@ -155,7 +155,7 @@ namespace OperationEagleGlass
                         targetValues[pawn][totals.Def] = targetValue;
 
                         int newTarget = Mathf.RoundToInt(targetValue * (float)totals.Max);
-                        
+
                         var validAbilities = allResourceAbilities.Where(a => a.CanAcceptResource(totals.Def)).ToList();
                         if (validAbilities.Count > 0)
                         {

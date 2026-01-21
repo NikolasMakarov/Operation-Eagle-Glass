@@ -67,7 +67,7 @@ namespace OperationEagleGlass
         private HaulableResourceInfo FindHaulableResource(Pawn pawn, List<Ability_Resource> abilities, bool forced)
         {
             var allResourceTypes = abilities
-                .SelectMany(a => a.maxResources)
+                .SelectMany(a => a.MaxResources)
                 .Select(r => r.thingDef)
                 .Distinct();
 

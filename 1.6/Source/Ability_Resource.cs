@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -15,9 +16,13 @@ namespace OperationEagleGlass
 
         public IThingHolder ParentHolder => pawn;
 
-        public List<ThingDefCountClass> maxResources => Props.maxResources;
-
-        public CompProperties_AbilityResource Props => (CompProperties_AbilityResource)def.comps?.FirstOrDefault(c => c is CompProperties_AbilityResource);
+        public List<ThingDefCountClass> MaxResources
+        {
+            get
+            {
+                return GetResourceProps().maxResources;
+            }
+        }
 
         public int ResourceCount(ThingDef resourceDef)
         {
@@ -50,7 +55,17 @@ namespace OperationEagleGlass
 
         public bool HasAnyAvailableSpace()
         {
-            return maxResources.Any(r => GetAvailableSpace(r.thingDef) > 0);
+            return MaxResources.Any(r => GetAvailableSpace(r.thingDef) > 0);
+        }
+
+        private CompAbilityEffect_ResourceBase GetResourceComp()
+        {
+            return comps.FirstOrDefault(c => c is CompAbilityEffect_ResourceBase) as CompAbilityEffect_ResourceBase;
+        }
+
+        private CompProperties_AbilityEffect_ResourceBase GetResourceProps()
+        {
+            return def.comps.FirstOrDefault(c => c is CompProperties_AbilityEffect_ResourceBase) as CompProperties_AbilityEffect_ResourceBase;
         }
 
         private List<Ability_Resource> cachedResourceAbilities;
@@ -71,7 +86,7 @@ namespace OperationEagleGlass
         private void DistributeToOtherAbilities(Thing resource)
         {
             var otherAbilities = GetAllResourceAbilities().Where(a => a != this);
-            
+
             foreach (var ability in otherAbilities)
             {
                 if (resource.stackCount <= 0) break;
@@ -118,7 +133,7 @@ namespace OperationEagleGlass
 
         public bool CanAcceptResource(ThingDef resourceDef)
         {
-            return maxResources.Exists(r => r.thingDef == resourceDef);
+            return MaxResources.Exists(r => r.thingDef == resourceDef);
         }
 
         public bool TryLoadResource(Thing resource, int count = -1)
@@ -139,7 +154,7 @@ namespace OperationEagleGlass
 
             Thing toAdd = resource.SplitOff(toLoad);
             bool added = innerContainer.TryAdd(toAdd);
-            
+
             if (!added)
             {
                 toAdd.Destroy();
@@ -156,7 +171,7 @@ namespace OperationEagleGlass
 
         public int GetMaxResourceCountForType(ThingDef resourceDef)
         {
-            var resourceDefEntry = maxResources?.FirstOrDefault(r => r.thingDef == resourceDef);
+            var resourceDefEntry = MaxResources.FirstOrDefault(r => r.thingDef == resourceDef);
             return resourceDefEntry != null ? resourceDefEntry.count : 0;
         }
 
@@ -204,25 +219,16 @@ namespace OperationEagleGlass
 
         public bool ConsumeResource(ThingDef resourceDef, int count)
         {
-            Log.Message($"[OEG] ConsumeResource called: need {count} {resourceDef.defName}");
-            
             int remaining = count;
             var allResourceAbilities = GetAllResourceAbilities();
-            
-            Log.Message($"[OEG] Found {allResourceAbilities.Count} resource abilities");
-            
             foreach (var ability in allResourceAbilities)
             {
                 if (remaining <= 0) break;
-                
+
                 int beforeConsume = remaining;
                 int consumed = ConsumeFromContainer(ability.innerContainer, resourceDef, remaining);
                 remaining -= consumed;
-                
-                Log.Message($"[OEG] Ability {ability.def.defName}: consumed {consumed}, remaining {remaining}");
             }
-
-            Log.Message($"[OEG] Final result: needed {count}, remaining {remaining}, success={remaining == 0}");
             return remaining == 0;
         }
 
@@ -230,7 +236,7 @@ namespace OperationEagleGlass
         {
             int consumed = 0;
             List<Thing> items = container.InnerListForReading.ToList();
-            
+
             foreach (var item in items)
             {
                 if (consumed >= count) break;
@@ -288,6 +294,26 @@ namespace OperationEagleGlass
             foreach (var gizmo in base.GetGizmos())
             {
                 yield return gizmo;
+            }
+        }
+    
+        public override string Tooltip
+        {
+            get
+            {
+                string text = base.Tooltip;
+                var costComp = GetResourceComp();
+                StringBuilder costText = new StringBuilder();
+                foreach (var cost in costComp.CostList)
+                {
+                    if (costText.Length > 0)
+                    {
+                        costText.AppendLine();
+                    }
+                    costText.Append(cost.thingDef.LabelCap + ": " + cost.count);
+                }
+                text = text + "\n\n" + "OEG_ResourceCost".Translate().Colorize(ColoredText.TipSectionTitleColor) + "\n" + costText.ToString();
+                return text;
             }
         }
     }

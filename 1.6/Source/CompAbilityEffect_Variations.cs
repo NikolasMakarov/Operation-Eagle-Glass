@@ -1,4 +1,4 @@
-﻿using RimWorld;
+using RimWorld;
 using Verse;
 
 namespace OperationEagleGlass
@@ -7,7 +7,7 @@ namespace OperationEagleGlass
     {
         protected override void PostHelicopterSpawn(Thing helicopter)
         {
-            if (helicopter is Skyfaller_Hovering hoveringHeli)
+            if (helicopter is Skyfaller_Helicopter hoveringHeli)
             {
                 hoveringHeli.abilityType = VehicleAbility.Support;
                 hoveringHeli.duration = Props.durationTicks;
@@ -20,7 +20,7 @@ namespace OperationEagleGlass
     {
         protected override void PostHelicopterSpawn(Thing helicopter)
         {
-            if (helicopter is Skyfaller_Hovering hoveringHeli)
+            if (helicopter is Skyfaller_Helicopter hoveringHeli)
             {
                 hoveringHeli.abilityType = VehicleAbility.Transport;
                 hoveringHeli.hasRopeDeployment = true;
@@ -43,7 +43,7 @@ namespace OperationEagleGlass
     {
         protected override void PostHelicopterSpawn(Thing helicopter)
         {
-            if (helicopter is Skyfaller_Hovering hoveringHeli)
+            if (helicopter is Skyfaller_Helicopter hoveringHeli)
             {
                 hoveringHeli.abilityType = VehicleAbility.Reinforcement;
                 hoveringHeli.duration = Props.durationTicks;

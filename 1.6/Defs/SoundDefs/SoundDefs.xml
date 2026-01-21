@@ -23,4 +23,25 @@
     </subSounds>
   </SoundDef>
 
+  <SoundDef>
+    <defName>OEG_StrafingRun_Sustain</defName>
+    <context>MapOnly</context>
+    <maxSimultaneous>1</maxSimultaneous>
+    <sustain>true</sustain>
+    <priorityMode>PrioritizeNearest</priorityMode>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>Vehicles/OEG_apache_sound_long</clipPath>
+          </li>
+        </grains>
+        <volumeRange>18</volumeRange>
+        <pitchRange>0.9~1.1</pitchRange>
+        <sustainLoop>false</sustainLoop>
+        <tempoAffectedByGameSpeed>true</tempoAffectedByGameSpeed>
+        <repeatMode>NeverTwice</repeatMode>
+      </li>
+    </subSounds>
+  </SoundDef>
 </Defs>

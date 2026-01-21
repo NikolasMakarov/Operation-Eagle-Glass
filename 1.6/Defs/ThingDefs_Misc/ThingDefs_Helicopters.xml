@@ -3,7 +3,7 @@
 
   <ThingDef Name="OEG_HelicopterArriving_Base" ParentName="SkyfallerBase" Abstract="True">
     <label>helicopter</label>
-    <thingClass>OperationEagleGlass.Skyfaller_Hovering</thingClass>
+    <thingClass>OperationEagleGlass.Skyfaller_Helicopter</thingClass>
     <graphicData>
       <graphicClass>Graphic_Multi</graphicClass>
       <shaderType>CutoutFlying</shaderType>
@@ -16,7 +16,7 @@
       <li>
         <verbClass>Verb_Shoot</verbClass>
         <hasStandardCommand>false</hasStandardCommand>
-        <defaultProjectile>Bullet_Helicopter_Gun</defaultProjectile>
+        <defaultProjectile>OEG_Helicopter_Bullet</defaultProjectile>
         <warmupTime>0</warmupTime>
         <defaultCooldownTime>1</defaultCooldownTime>
         <range>35</range>
@@ -94,7 +94,7 @@
 
   <ThingDef Name="OEG_HelicopterLeaving_Base" ParentName="SkyfallerBase" Abstract="True">
     <label>helicopter</label>
-    <thingClass>OperationEagleGlass.Skyfaller_Base</thingClass>
+    <thingClass>OperationEagleGlass.Skyfaller_Hovering</thingClass>
     <graphicData>
       <graphicClass>Graphic_Multi</graphicClass>
       <shaderType>CutoutFlying</shaderType>
@@ -154,4 +154,17 @@
     </graphicData>
   </ThingDef>
 
+  <ThingDef ParentName="BaseBullet">
+    <defName>OEG_Helicopter_Bullet</defName>
+    <label>helicopter bullet</label>
+    <graphicData>
+      <texPath>Things/Projectile/Bullet_Big</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <projectile>
+      <damageDef>Bullet</damageDef>
+      <damageAmountBase>15</damageAmountBase>
+      <speed>70</speed>
+    </projectile>
+  </ThingDef>
 </Defs>

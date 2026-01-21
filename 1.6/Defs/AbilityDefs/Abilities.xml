@@ -26,12 +26,6 @@
     <description>Call in a helicopter for fire support. The helicopter will hover and engage enemies for a limited time.</description>
     <iconPath>UI/OEG_helicopter_support</iconPath>
     <comps>
-      <li Class="OperationEagleGlass.CompProperties_AbilityResource">
-        <maxResources>
-          <Steel>100</Steel>
-          <ComponentIndustrial>10</ComponentIndustrial>
-        </maxResources>
-      </li>
       <li Class="OperationEagleGlass.CompProperties_AbilityCallHelicopter_Support">
         <skyfallerDef>OEG_HelicopterArriving_M5AOne</skyfallerDef>
         <durationTicks>1800</durationTicks>
@@ -39,6 +33,10 @@
           <Steel>50</Steel>
           <ComponentIndustrial>5</ComponentIndustrial>
         </costList>
+        <maxResources>
+          <Steel>100</Steel>
+          <ComponentIndustrial>10</ComponentIndustrial>
+        </maxResources>
       </li>
     </comps>
   </AbilityDef>
@@ -49,12 +47,6 @@
     <description>Call in a helicopter to deploy mechanoid reinforcements.</description>
     <iconPath>UI/OEG_helicopter_transport</iconPath>
     <comps>
-      <li Class="OperationEagleGlass.CompProperties_AbilityResource">
-        <maxResources>
-          <Steel>200</Steel>
-          <ComponentIndustrial>20</ComponentIndustrial>
-        </maxResources>
-      </li>
       <li Class="OperationEagleGlass.CompProperties_AbilityCallHelicopter_Transport">
         <skyfallerDef>OEG_HelicopterArriving_M5AOne</skyfallerDef>
         <pawnsToDrop>
@@ -65,6 +57,10 @@
           <Steel>100</Steel>
           <ComponentIndustrial>10</ComponentIndustrial>
         </costList>
+        <maxResources>
+          <Steel>200</Steel>
+          <ComponentIndustrial>20</ComponentIndustrial>
+        </maxResources>
       </li>
     </comps>
   </AbilityDef>
@@ -75,12 +71,6 @@
     <description>Call in a helicopter that deploys mechanoids and provides fire support.</description>
     <iconPath>UI/OEG_helicopter_reinforcement</iconPath>
     <comps>
-      <li Class="OperationEagleGlass.CompProperties_AbilityResource">
-        <maxResources>
-          <Steel>300</Steel>
-          <ComponentIndustrial>30</ComponentIndustrial>
-        </maxResources>
-      </li>
       <li Class="OperationEagleGlass.CompProperties_AbilityCallHelicopter_Reinforcement">
         <skyfallerDef>OEG_HelicopterArriving_M5ATwo</skyfallerDef>
         <pawnsToDrop>
@@ -92,6 +82,95 @@
           <Steel>150</Steel>
           <ComponentIndustrial>15</ComponentIndustrial>
         </costList>
+        <maxResources>
+          <Steel>300</Steel>
+          <ComponentIndustrial>30</ComponentIndustrial>
+        </maxResources>
+      </li>
+    </comps>
+  </AbilityDef>
+
+  <AbilityDef Name="OEG_StrafingRunBase" Abstract="True">
+    <gizmoClass>Command_Ability</gizmoClass>
+    <abilityClass>OperationEagleGlass.Ability_Resource</abilityClass>
+    <verbProperties>
+      <verbClass>OperationEagleGlass.Verb_StrafingRun</verbClass>
+      <range>999</range>
+      <warmupTime>0</warmupTime>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetPawns>false</canTargetPawns>
+        <canTargetBuildings>false</canTargetBuildings>
+      </targetParams>
+    </verbProperties>
+    <cooldownTicksRange>600</cooldownTicksRange>
+    <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
+    <displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
+    <disableGizmoWhileUndrafted>false</disableGizmoWhileUndrafted>
+  </AbilityDef>
+
+  <AbilityDef ParentName="OEG_StrafingRunBase">
+    <defName>OEG_StrafingRun_I</defName>
+    <label>strafing run</label>
+    <description>Calls in a strafing run with a machine gun.</description>
+    <iconPath>UI/OEG_bombingrun_I</iconPath>
+    <comps>
+      <li Class="OperationEagleGlass.CompProperties_AbilityStrafingRun">
+        <skyfallerDef>OEG_StrafingRunSkyfaller_MachineGun</skyfallerDef>
+        <height>50</height>
+        <width>5</width>
+        <costList>
+          <Steel>50</Steel>
+          <ComponentIndustrial>5</ComponentIndustrial>
+        </costList>
+        <maxResources>
+          <Steel>50</Steel>
+          <ComponentIndustrial>5</ComponentIndustrial>
+        </maxResources>
+      </li>
+    </comps>
+  </AbilityDef>
+
+  <AbilityDef ParentName="OEG_StrafingRunBase">
+    <defName>OEG_StrafingRun_II</defName>
+    <label>strafing run II</label>
+    <description>Calls in a strafing run with an autocannon.</description>
+    <iconPath>UI/OEG_bombingrun_II</iconPath>
+    <comps>
+      <li Class="OperationEagleGlass.CompProperties_AbilityStrafingRun">
+        <skyfallerDef>OEG_StrafingRunSkyfaller_Autocannon</skyfallerDef>
+        <height>50</height>
+        <width>5</width>
+        <costList>
+          <Steel>100</Steel>
+          <ComponentIndustrial>10</ComponentIndustrial>
+        </costList>
+        <maxResources>
+          <Steel>100</Steel>
+          <ComponentIndustrial>10</ComponentIndustrial>
+        </maxResources>
+      </li>
+    </comps>
+  </AbilityDef>
+
+  <AbilityDef ParentName="OEG_StrafingRunBase">
+    <defName>OEG_StrafingRun_III</defName>
+    <label>strafing run III</label>
+    <description>Calls in a strafing run with rockets.</description>
+    <iconPath>UI/OEG_bombingrun_III</iconPath>
+    <comps>
+      <li Class="OperationEagleGlass.CompProperties_AbilityStrafingRun">
+        <skyfallerDef>OEG_StrafingRunSkyfaller_Rockets</skyfallerDef>
+        <height>50</height>
+        <width>5</width>
+        <costList>
+          <Steel>150</Steel>
+          <ComponentIndustrial>15</ComponentIndustrial>
+        </costList>
+        <maxResources>
+          <Steel>150</Steel>
+          <ComponentIndustrial>15</ComponentIndustrial>
+        </maxResources>
       </li>
     </comps>
   </AbilityDef>

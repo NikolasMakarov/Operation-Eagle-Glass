@@ -1,8 +1,6 @@
 using UnityEngine;
 using Verse;
-using Verse.AI;
 using RimWorld;
-using System.Collections.Generic;
 
 namespace OperationEagleGlass
 {
