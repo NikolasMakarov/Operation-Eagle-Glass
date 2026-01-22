@@ -1,5 +1,3 @@
-using RimWorld;
-using Verse;
 using System.Linq;
 
 namespace OperationEagleGlass

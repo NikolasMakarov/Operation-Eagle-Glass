@@ -1,7 +1,4 @@
-// 1.6/Source/Skyfaller_LinearRun.cs
-using RimWorld;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using Verse;
 using Verse.Sound;
@@ -60,8 +57,6 @@ namespace OperationEagleGlass
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, respawningAfterLoad);
-
-            // Fix: Ensure dictionary is initialized with all verbs for new spawns
             if (verbFireTicks == null)
             {
                 verbFireTicks = new Dictionary<Verb, int>();

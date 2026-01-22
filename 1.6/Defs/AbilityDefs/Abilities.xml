@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
   <AbilityDef Name="OEG_CallHelicopterBase" Abstract="True">
@@ -326,9 +326,43 @@
         <height>40</height>
         <width>3</width>
         <dropIntervalTicks>25</dropIntervalTicks>
-        <pawnsToDrop><Mech_Lancer>6</Mech_Lancer></pawnsToDrop>
-        <costList><Steel>120</Steel><ComponentIndustrial>12</ComponentIndustrial></costList>
-        <maxResources><Steel>120</Steel><ComponentIndustrial>12</ComponentIndustrial></maxResources>
+        <pawnsToDrop>
+          <Mech_Lancer>6</Mech_Lancer>
+        </pawnsToDrop>
+        <costList>
+          <Steel>120</Steel>
+          <ComponentIndustrial>12</ComponentIndustrial>
+        </costList>
+        <maxResources>
+          <Steel>120</Steel>
+          <ComponentIndustrial>12</ComponentIndustrial>
+        </maxResources>
+      </li>
+    </comps>
+  </AbilityDef>
+
+  <AbilityDef ParentName="OEG_ParadropBase">
+    <defName>OEG_Paradrop_II</defName>
+    <label>paradrop II</label>
+    <description>Calls in a cargo plane to drop 6 combat mechanoids (Scythers) in a line.</description>
+    <iconPath>UI/OEG_paradrop_II</iconPath>
+    <comps>
+      <li Class="OperationEagleGlass.CompProperties_AbilityParadrop">
+        <skyfallerDef>OEG_ParadropSkyfaller</skyfallerDef>
+        <height>40</height>
+        <width>3</width>
+        <dropIntervalTicks>25</dropIntervalTicks>
+        <pawnsToDrop>
+          <Mech_Scyther>6</Mech_Scyther>
+        </pawnsToDrop>
+        <costList>
+          <Steel>180</Steel>
+          <ComponentIndustrial>18</ComponentIndustrial>
+        </costList>
+        <maxResources>
+          <Steel>180</Steel>
+          <ComponentIndustrial>18</ComponentIndustrial>
+        </maxResources>
       </li>
     </comps>
   </AbilityDef>
@@ -344,11 +378,44 @@
         <height>40</height>
         <width>3</width>
         <dropIntervalTicks>50</dropIntervalTicks>
-        <pawnsToDrop><Mech_CentipedeBlaster>2</Mech_CentipedeBlaster></pawnsToDrop>
-        <costList><Steel>250</Steel><ComponentIndustrial>25</ComponentIndustrial></costList>
-        <maxResources><Steel>250</Steel><ComponentIndustrial>25</ComponentIndustrial></maxResources>
+        <pawnsToDrop>
+          <Mech_CentipedeBlaster>2</Mech_CentipedeBlaster>
+        </pawnsToDrop>
+        <costList>
+          <Steel>250</Steel>
+          <ComponentIndustrial>25</ComponentIndustrial>
+        </costList>
+        <maxResources>
+          <Steel>250</Steel>
+          <ComponentIndustrial>25</ComponentIndustrial>
+        </maxResources>
       </li>
     </comps>
   </AbilityDef>
 
+  <AbilityDef ParentName="OEG_ParadropBase">
+    <defName>OEG_SpecialParadrop</defName>
+    <label>special paradrop</label>
+    <description>Calls in a cargo plane to drop 6 special mechanoids in a line.</description>
+    <iconPath>UI/OEG_specialparadrop_II</iconPath>
+    <comps>
+      <li Class="OperationEagleGlass.CompProperties_AbilityParadrop">
+        <skyfallerDef>OEG_ParadropSkyfaller</skyfallerDef>
+        <height>40</height>
+        <width>3</width>
+        <dropIntervalTicks>25</dropIntervalTicks>
+        <pawnsToDrop>
+          <Mech_Tesseron>6</Mech_Tesseron>
+        </pawnsToDrop>
+        <costList>
+          <Steel>200</Steel>
+          <ComponentIndustrial>20</ComponentIndustrial>
+        </costList>
+        <maxResources>
+          <Steel>200</Steel>
+          <ComponentIndustrial>20</ComponentIndustrial>
+        </maxResources>
+      </li>
+    </comps>
+  </AbilityDef>
 </Defs>
