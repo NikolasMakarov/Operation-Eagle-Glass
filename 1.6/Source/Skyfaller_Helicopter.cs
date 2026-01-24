@@ -37,20 +37,9 @@ namespace OperationEagleGlass
             }
         }
 
-        public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
-        {
-            base.Destroy(mode);
-            Log.Message("Destroying " + this);
-        }
-
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, respawningAfterLoad);
-            if (hasRopeDeployment)
-            {
-                leftRope = new Rope(-1f);
-                rightRope = new Rope(1f);
-            }
             var ext = def.GetModExtension<HelicopterSkyfallerExtension>();
             if (ext != null && ext.gunGraphic != null)
             {
@@ -58,6 +47,17 @@ namespace OperationEagleGlass
                 {
                     gunGraphic = ext.gunGraphic.Graphic;
                 });
+            }
+            if (hasRopeDeployment)
+            {
+                float extendSpeed = ext?.ropeExtendSpeed ?? 0.1f;
+                float descentTime = ext?.ropeDescentTime ?? 1f;
+                Color ropeColor = ext?.ropeColor ?? new Color(0.15f, 0.1f, 0.05f);
+                float ropeWidth = ext?.ropeWidth ?? 0.2f;
+                Vector2 leftDrawOffset = ext?.leftRopeDrawOffset ?? new Vector2(-2f, 0f);
+                Vector2 rightDrawOffset = ext?.rightRopeDrawOffset ?? new Vector2(2f, 0f);
+                leftRope = new Rope(leftDrawOffset, extendSpeed, descentTime, ropeColor, ropeWidth);
+                rightRope = new Rope(rightDrawOffset, extendSpeed, descentTime, ropeColor, ropeWidth);
             }
         }
 
@@ -70,7 +70,7 @@ namespace OperationEagleGlass
             }
             if (this.IsHashIntervalTick(10))
             {
-                FleckMaker.ThrowDustPuffThick(this.Position.ToVector3Shifted(), this.Map, 5f, Color.white);
+                FleckMaker.ThrowDustPuffThick(DrawPos, this.Map, 5f, Color.white);
             }
             if (!this.hasImpacted)
             {
@@ -180,11 +180,6 @@ namespace OperationEagleGlass
         public void Depart()
         {
             if (this.Destroyed) return;
-            for (int i = 0; i < 3; i++)
-            {
-                FleckMaker.ThrowDustPuffThick(this.Position.ToVector3Shifted(), this.Map, 3f, new Color(0.7f, 0.7f, 0.7f, 2.5f));
-            }
-
             var ext = def.GetModExtension<HelicopterSkyfallerExtension>();
             var skyfaller = SkyfallerMaker.MakeSkyfaller(ext.leavingSkyfaller);
             GenSpawn.Spawn(skyfaller, this.Position, this.Map, this.Rotation);
@@ -207,22 +202,8 @@ namespace OperationEagleGlass
 
             Vector3 heliPos = this.DrawPos;
             heliPos.y = AltitudeLayer.Skyfaller.AltitudeFor();
-
             leftRope.Tick(heliPos, this.Position, this.Map);
             rightRope.Tick(heliPos, this.Position, this.Map);
-
-            if (this.IsHashIntervalTick(15))
-            {
-                Vector3 dustPos = heliPos;
-                dustPos.x -= 1f;
-                dustPos.z -= leftRope.Length;
-                FleckMaker.ThrowDustPuffThick(dustPos, this.Map, 1.2f, Color.gray);
-
-                dustPos = heliPos;
-                dustPos.x += 1f;
-                dustPos.z -= rightRope.Length;
-                FleckMaker.ThrowDustPuffThick(dustPos, this.Map, 1.2f, Color.gray);
-            }
 
             AssignPawnsToRopes();
 
@@ -256,7 +237,11 @@ namespace OperationEagleGlass
 
             if (gunGraphic != null)
             {
-                gunGraphic.Draw(drawLoc, base.Rotation, this);
+                Vector3 gunDrawLoc = drawLoc;
+                GetDrawPositionAndRotation(ref gunDrawLoc, out var extraRotation);
+                var ext = def.GetModExtension<HelicopterSkyfallerExtension>();
+                Vector2 gunOffset = ext?.gunDrawOffset ?? new Vector2(0f, -4f);
+                gunGraphic.Draw(gunDrawLoc + new Vector3(gunOffset.x, 0, gunOffset.y), flipRot ? base.Rotation.Opposite : base.Rotation, this, extraRotation);
             }
 
             if (!isDeployingRope) return;

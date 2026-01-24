@@ -1,12 +1,10 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-
-  <ThingDef Name="OEG_HelicopterArriving_Base" ParentName="SkyfallerBase" Abstract="True">
+  <ThingDef Name="OEG_Helicopter_Base" ParentName="SkyfallerBase" Abstract="True">
     <label>helicopter</label>
-    <thingClass>OperationEagleGlass.Skyfaller_Helicopter</thingClass>
     <graphicData>
       <graphicClass>Graphic_Multi</graphicClass>
-      <shaderType>CutoutFlying</shaderType>
+      <shaderType>Transparent</shaderType>
       <drawSize>(6,10)</drawSize>
     </graphicData>
     <size>(5,5)</size>
@@ -35,8 +33,16 @@
     </comps>
     <skyfaller>
       <rotateGraphicTowardsDirection>true</rotateGraphicTowardsDirection>
-      <movementType>Decelerate</movementType>
       <floatingSound>OEG_Helicopter_Sustain</floatingSound>
+      <shadowSize>(5,5)</shadowSize>
+      <motesPerCell>1</motesPerCell>
+    </skyfaller>
+  </ThingDef>
+
+  <ThingDef Name="OEG_HelicopterArriving_Base" ParentName="OEG_Helicopter_Base" Abstract="True">
+    <thingClass>OperationEagleGlass.Skyfaller_Helicopter</thingClass>
+    <skyfaller>
+      <movementType>Decelerate</movementType>
       <speedCurve>
         <points>
           <li>(0, 1.8)</li>
@@ -59,8 +65,6 @@
           <li>(1, 0)</li>
         </points>
       </rotationCurve>
-      <shadowSize>(5,5)</shadowSize>
-      <motesPerCell>1</motesPerCell>
       <ticksToImpactRange>
         <min>200</min>
         <max>200</max>
@@ -79,9 +83,10 @@
         <gunGraphic>
           <texPath>Things/Vehicle/OEG_Apache/OEG_Apache_gun</texPath>
           <graphicClass>Graphic_Single</graphicClass>
-          <shaderType>CutoutFlying</shaderType>
-          <drawSize>(7,7)</drawSize>
+          <shaderType>Transparent</shaderType>
+          <drawSize>(2,2)</drawSize>
         </gunGraphic>
+        <gunDrawOffset>(0, -4)</gunDrawOffset>
       </li>
     </modExtensions>
   </ThingDef>
@@ -94,27 +99,21 @@
     <modExtensions>
       <li Class="OperationEagleGlass.HelicopterSkyfallerExtension">
         <leavingSkyfaller>OEG_HelicopterLeaving_Blackhawk</leavingSkyfaller>
+        <ropeExtendSpeed>0.1</ropeExtendSpeed>
+        <ropeDescentTime>1</ropeDescentTime>
+        <ropeColor>(0.15, 0.1, 0.05)</ropeColor>
+        <ropeWidth>0.2</ropeWidth>
+        <leftRopeDrawOffset>(-2, 0)</leftRopeDrawOffset>
+        <rightRopeDrawOffset>(2, 0)</rightRopeDrawOffset>
       </li>
     </modExtensions>
   </ThingDef>
-
-  <ThingDef Name="OEG_HelicopterLeaving_Base" ParentName="SkyfallerBase" Abstract="True">
-    <label>helicopter</label>
+  <ThingDef Name="OEG_HelicopterLeaving_Base" ParentName="OEG_Helicopter_Base" Abstract="True">
     <thingClass>OperationEagleGlass.Skyfaller_Hovering</thingClass>
-    <graphicData>
-      <graphicClass>Graphic_Multi</graphicClass>
-      <shaderType>CutoutFlying</shaderType>
-      <drawSize>(1,1)</drawSize>
-    </graphicData>
-    <size>(5,5)</size>
     <skyfaller>
-      <rotateGraphicTowardsDirection>true</rotateGraphicTowardsDirection>
       <reversed>true</reversed>
       <movementType>Accelerate</movementType>
       <shadow>Things/Skyfaller/SkyfallerShadowCircle</shadow>
-      <shadowSize>(5,5)</shadowSize>
-      <motesPerCell>1</motesPerCell>
-      <floatingSound>OEG_Helicopter_Sustain</floatingSound>
       <ticksToImpactRange>
         <min>-150</min>
         <max>-150</max>
@@ -156,9 +155,10 @@
         <gunGraphic>
           <texPath>Things/Vehicle/OEG_Apache/OEG_Apache_gun</texPath>
           <graphicClass>Graphic_Single</graphicClass>
-          <shaderType>CutoutFlying</shaderType>
-          <drawSize>(7,7)</drawSize>
+          <shaderType>Transparent</shaderType>
+          <drawSize>(2,2)</drawSize>
         </gunGraphic>
+        <gunDrawOffset>(0, -4)</gunDrawOffset>
       </li>
     </modExtensions>
   </ThingDef>

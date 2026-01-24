@@ -23,7 +23,7 @@ namespace OperationEagleGlass
             var targetCell = currentPos.ToIntVec3() + forwardOffset + perpendicularOffset;
 
             var projectile = (Projectile)GenSpawn.Spawn(verb.verbProps.defaultProjectile, currentPos.ToIntVec3(), Map);
-            projectile.Launch(null, spawnPos, targetCell, targetCell, ProjectileHitFlags.IntendedTarget);
+            projectile.Launch(null, spawnPos, targetCell, targetCell, ProjectileHitFlags.All);
         }
     }
 }

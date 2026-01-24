@@ -14,13 +14,29 @@ namespace OperationEagleGlass
             var skyfaller = SkyfallerMaker.MakeSkyfaller(Props.skyfallerDef) as Skyfaller_BombingRun;
             skyfaller.height = Props.height;
             skyfaller.width = Props.width;
+            skyfaller.hitCenter = Props.hitCenter;
             return skyfaller;
         }
 
         public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
         {
-            base.Apply(target, dest);
+            if (string.IsNullOrEmpty(Props.confirmationMessage))
+            {
+                base.Apply(target, dest);
+                SpawnSkyfallers(target, dest);
+            }
+            else
+            {
+                Find.WindowStack.Add(new Dialog_MessageBox(Props.confirmationMessage.Translate(), "Confirm".Translate(), delegate
+                {
+                    base.Apply(target, dest);
+                    SpawnSkyfallers(target, dest);
+                }, "Cancel".Translate()));
+            }
+        }
 
+        private void SpawnSkyfallers(LocalTargetInfo target, LocalTargetInfo dest)
+        {
             Vector3 direction = (end - start).ToVector3().normalized;
             Vector3 perpendicular = new Vector3(-direction.z, 0, direction.x).normalized;
 
@@ -30,6 +46,7 @@ namespace OperationEagleGlass
                 skyfaller.height = Props.height;
                 skyfaller.width = Props.width;
                 skyfaller.instigator = parent.pawn;
+                skyfaller.hitCenter = Props.hitCenter;
 
                 float offset = (i - (Props.planeCount - 1) / 2f) * Props.planeSpacing;
                 Vector3 offsetVector = perpendicular * offset;
@@ -46,6 +63,8 @@ namespace OperationEagleGlass
     {
         public int planeCount = 1;
         public float planeSpacing = 5f;
+        public string confirmationMessage;
+        public bool hitCenter = false;
 
         public CompProperties_AbilityBombingRun()
         {

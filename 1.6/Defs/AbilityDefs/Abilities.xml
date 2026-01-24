@@ -210,8 +210,6 @@
         <skyfallerDef>OEG_BombingRunSkyfaller_Basic</skyfallerDef>
         <height>50</height>
         <width>5</width>
-        <planeCount>1</planeCount>
-        <planeSpacing>5</planeSpacing>
         <costList>
           <Steel>50</Steel>
           <ComponentIndustrial>5</ComponentIndustrial>
@@ -234,8 +232,6 @@
         <skyfallerDef>OEG_BombingRunSkyfaller_Incendiary</skyfallerDef>
         <height>50</height>
         <width>5</width>
-        <planeCount>1</planeCount>
-        <planeSpacing>5</planeSpacing>
         <costList>
           <Steel>100</Steel>
           <ComponentIndustrial>10</ComponentIndustrial>
@@ -282,8 +278,8 @@
         <skyfallerDef>OEG_BombingRunSkyfaller_Nuclear</skyfallerDef>
         <height>50</height>
         <width>5</width>
-        <planeCount>1</planeCount>
-        <planeSpacing>5</planeSpacing>
+        <confirmationMessage>OEG_NuclearStrikeWarning</confirmationMessage>
+        <hitCenter>true</hitCenter>
         <costList>
           <Steel>200</Steel>
           <ComponentIndustrial>20</ComponentIndustrial>

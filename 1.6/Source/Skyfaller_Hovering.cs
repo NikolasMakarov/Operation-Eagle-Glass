@@ -22,7 +22,7 @@ namespace OperationEagleGlass
             base.Tick();
             if (this.IsHashIntervalTick(10))
             {
-                FleckMaker.ThrowDustPuffThick(this.Position.ToVector3Shifted(), this.Map, 5f, Color.white);
+                FleckMaker.ThrowDustPuffThick(DrawPos, this.Map, 5f, Color.white);
             }
         }
     }

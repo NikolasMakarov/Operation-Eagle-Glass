@@ -14,13 +14,15 @@
       <speed>0.8</speed>
       <shadowSize>0</shadowSize>
       <motesPerCell>0</motesPerCell>
-      <ticksToImpactRange><min>180</min><max>220</max></ticksToImpactRange>
+      <ticksToImpactRange>
+        <min>180</min>
+        <max>220</max>
+      </ticksToImpactRange>
       <speedCurve>
         <points>
-          <li>(0.0, 4.0)</li>
-          <li>(0.4, 3.5)</li>
-          <li>(0.45, 0.2)</li>
-          <li>(1.0, 0.2)</li>
+          <li>(0.0, 2.0)</li>
+          <li>(0.45, 0.1)</li>
+          <li>(1.0, 0.1)</li>
         </points>
       </speedCurve>
     </skyfaller>
@@ -30,7 +32,7 @@
       </li>
     </modExtensions>
   </ThingDef>
-  
+
   <ThingDef ParentName="SkyfallerBase">
     <defName>OEG_ParadropSkyfaller</defName>
     <label>paradrop run</label>

@@ -13,7 +13,10 @@ namespace OperationEagleGlass
         protected Dictionary<Verb, int> verbWarmups = new Dictionary<Verb, int>();
         protected Dictionary<Verb, LocalTargetInfo> verbTargets = new Dictionary<Verb, LocalTargetInfo>();
         private List<Verb> verbKeys;
+        private List<Verb> verbKeys2;
+        private List<Verb> verbKeys3;
         private List<int> intValues;
+        private List<int> intValues2;
         private List<LocalTargetInfo> targetInfoValues;
         private const int TryStartShootSomethingIntervalTicks = 15;
 
@@ -47,8 +50,8 @@ namespace OperationEagleGlass
             base.ExposeData();
             Scribe_Deep.Look(ref verbTracker, "verbTracker", this);
             Scribe_Collections.Look(ref verbCooldowns, "verbCooldowns", LookMode.Reference, LookMode.Value, ref verbKeys, ref intValues);
-            Scribe_Collections.Look(ref verbWarmups, "verbWarmups", LookMode.Reference, LookMode.Value, ref verbKeys, ref intValues);
-            Scribe_Collections.Look(ref verbTargets, "verbTargets", LookMode.Reference, LookMode.TargetInfo, ref verbKeys, ref targetInfoValues);
+            Scribe_Collections.Look(ref verbWarmups, "verbWarmups", LookMode.Reference, LookMode.Value, ref verbKeys2, ref intValues2);
+            Scribe_Collections.Look(ref verbTargets, "verbTargets", LookMode.Reference, LookMode.LocalTargetInfo, ref verbKeys3, ref targetInfoValues);
 
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
@@ -166,7 +169,7 @@ namespace OperationEagleGlass
             if (t == null) return false;
             if (t.Destroyed || (t is Pawn pawn && (pawn.Dead || pawn.Destroyed))) return false;
             if (t is Pawn pawn2 && pawn2.Downed) return false;
-            if (t.Faction != null && !t.Faction.HostileTo(Faction.OfPlayer)) return false;
+            if (t.Faction == null || !t.Faction.HostileTo(Faction.OfPlayer)) return false;
             if (t.Position.DistanceTo(this.Position) > verb.EffectiveRange) return false;
             if (!verb.CanHitTarget(t)) return false;
             return true;
@@ -176,7 +179,7 @@ namespace OperationEagleGlass
         {
             Destroy();
         }
-        
+
         protected virtual void BeginBurst(Verb verb)
         {
             if (verbTargets[verb].IsValid)
@@ -186,7 +189,7 @@ namespace OperationEagleGlass
                     OnOutOfAmmo();
                     return;
                 }
-        
+
                 if (ammoComp != null)
                 {
                     ammoComp.ConsumeAmmo(1);

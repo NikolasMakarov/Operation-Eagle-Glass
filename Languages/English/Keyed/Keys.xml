@@ -8,4 +8,5 @@
   <OEG_ClickToAdjustResources>Click and drag to adjust resource amount.</OEG_ClickToAdjustResources>
   <OEG_ResourceManagement>Resource management</OEG_ResourceManagement>
   <OEG_ResourceCost>Resource cost</OEG_ResourceCost>
+  <OEG_NuclearStrikeWarning>This strike will cause toxic fallout.</OEG_NuclearStrikeWarning>
 </LanguageData>

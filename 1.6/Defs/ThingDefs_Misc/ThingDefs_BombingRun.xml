@@ -12,7 +12,7 @@
     <thingClass>Projectile_Explosive</thingClass>
     <projectile>
       <damageDef>Bomb</damageDef>
-      <explosionRadius>2.9</explosionRadius>
+      <explosionRadius>4.35</explosionRadius>
       <speed>50</speed>
     </projectile>
   </ThingDef>
@@ -28,7 +28,7 @@
     <thingClass>Projectile_Explosive</thingClass>
     <projectile>
       <damageDef>Flame</damageDef>
-      <explosionRadius>2.9</explosionRadius>
+      <explosionRadius>4.35</explosionRadius>
       <explosionChanceToStartFire>0.5</explosionChanceToStartFire>
       <speed>50</speed>
     </projectile>
@@ -45,7 +45,7 @@
     <thingClass>OperationEagleGlass.Projectile_NuclearBomb</thingClass>
     <projectile>
       <damageDef>Bomb</damageDef>
-      <explosionRadius>14.9</explosionRadius>
+      <explosionRadius>22.35</explosionRadius>
       <damageAmountBase>250</damageAmountBase>
       <explosionChanceToStartFire>0.8</explosionChanceToStartFire>
       <speed>50</speed>

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using Verse;
 using RimWorld;
@@ -10,29 +11,30 @@ namespace OperationEagleGlass
     {
         private enum RopeState { Extending, Extended, Retracting }
         
-        private const float EXTEND_SPEED = 0.1f;
-        private const float DESCENT_TIME = 1f;
-        
-        private static Material cachedRopeMaterial;
+        private static Dictionary<Color, Material> cachedRopeMaterials = new Dictionary<Color, Material>();
         
         private RopeState state;
         private float length;
         private float targetLength;
         private Pawn currentPawn;
-        private float xOffset;
+        private Vector2 drawOffset;
         private float descentProgress;
-        
+        private float extendSpeed;
+        private float descentTime;
+        private Color ropeColor;
+        private float ropeWidth;
         public bool IsReady => state == RopeState.Extended && currentPawn == null;
         public bool IsRetracted => state == RopeState.Retracting && length <= 0f;
         public bool IsComplete => IsRetracted;
         public bool HasPawn => currentPawn != null;
-        public float XOffset => xOffset;
-        public float Length => length;
         public Pawn CurrentPawn => currentPawn;
-        
-        public Rope(float xOffset)
+        public Rope(Vector2 drawOffset, float extendSpeed, float descentTime, Color ropeColor, float ropeWidth)
         {
-            this.xOffset = xOffset;
+            this.drawOffset = drawOffset;
+            this.extendSpeed = extendSpeed;
+            this.descentTime = descentTime;
+            this.ropeColor = ropeColor;
+            this.ropeWidth = ropeWidth;
             state = RopeState.Extending;
             length = 0f;
             currentPawn = null;
@@ -45,15 +47,16 @@ namespace OperationEagleGlass
         
         static Rope()
         {
-            InitializeMaterial();
         }
 
-        private static void InitializeMaterial()
+        private static Material GetRopeMaterial(Color color)
         {
-            if (cachedRopeMaterial == null)
+            if (!cachedRopeMaterials.TryGetValue(color, out var material))
             {
-                cachedRopeMaterial = SolidColorMaterials.SimpleSolidColorMaterial(new Color(0.15f, 0.1f, 0.05f));
+                material = SolidColorMaterials.SimpleSolidColorMaterial(color);
+                cachedRopeMaterials[color] = material;
             }
+            return material;
         }
         
         public void Tick(Vector3 heliPos, IntVec3 groundPos, Map map)
@@ -76,7 +79,7 @@ namespace OperationEagleGlass
         
         private void TickExtending()
         {
-            length += EXTEND_SPEED;
+            length += extendSpeed;
             if (length >= targetLength)
             {
                 length = targetLength;
@@ -89,7 +92,7 @@ namespace OperationEagleGlass
         {
             if (currentPawn != null)
             {
-                descentProgress += 1f / (DESCENT_TIME * 60f);
+                descentProgress += 1f / (descentTime * 60f);
                 if (descentProgress >= 1f)
                 {
                     descentProgress = 1f;
@@ -101,7 +104,7 @@ namespace OperationEagleGlass
         
         private void TickRetracting()
         {
-            length -= EXTEND_SPEED;
+            length -= extendSpeed;
             if (length <= 0f)
             {
                 length = 0f;
@@ -111,9 +114,9 @@ namespace OperationEagleGlass
         private void DeployPawn(IntVec3 groundPos, Map map)
         {
             IntVec3 spawnPos = groundPos;
-            spawnPos.x += Mathf.RoundToInt(xOffset);
+            spawnPos.x += Mathf.RoundToInt(drawOffset.x);
+            spawnPos.z += Mathf.RoundToInt(drawOffset.y);
             GenSpawn.Spawn(currentPawn, spawnPos, map);
-            FleckMaker.ThrowDustPuffThick(spawnPos.ToVector3Shifted(), map, 2f, Color.gray);
         }
         
         public void AssignPawn(Pawn pawn)
@@ -135,7 +138,7 @@ namespace OperationEagleGlass
             if (length <= 0f) return;
             
             Vector3 ropeBottom = heliPos;
-            ropeBottom.x += xOffset;
+            ropeBottom.x += drawOffset.x;
             ropeBottom.z -= length;
             
             DrawRope(heliPos, ropeBottom);
@@ -148,11 +151,6 @@ namespace OperationEagleGlass
         
         private void DrawRope(Vector3 top, Vector3 bottom)
         {
-            if (cachedRopeMaterial == null)
-            {
-                InitializeMaterial();
-            }
-            
             float ropeLength = top.z - bottom.z;
             Vector3 center = (top + bottom) / 2f;
             center.y = AltitudeLayer.Skyfaller.AltitudeFor() - 0.1f;
@@ -160,9 +158,10 @@ namespace OperationEagleGlass
             Matrix4x4 matrix = Matrix4x4.TRS(
                 center,
                 Quaternion.identity,
-                new Vector3(0.2f, 1f, ropeLength)
+                new Vector3(ropeWidth, 1f, ropeLength)
             );
-            Graphics.DrawMesh(MeshPool.plane10, matrix, cachedRopeMaterial, 0);
+            Material ropeMaterial = GetRopeMaterial(ropeColor);
+            Graphics.DrawMesh(MeshPool.plane10, matrix, ropeMaterial, 0);
         }
 
         private void DrawPawnOnRope(Vector3 heliPos)
@@ -173,7 +172,7 @@ namespace OperationEagleGlass
             }
 
             Vector3 top = heliPos;
-            top.x += xOffset;
+            top.x += drawOffset.x;
 
             Vector3 bottom = heliPos;
             bottom.z -= length;
@@ -192,8 +191,12 @@ namespace OperationEagleGlass
             Scribe_Values.Look(ref length, "length", 0f);
             Scribe_Values.Look(ref targetLength, "targetLength", 0f);
             Scribe_References.Look(ref currentPawn, "currentPawn");
-            Scribe_Values.Look(ref xOffset, "xOffset", 0f);
+            Scribe_Values.Look(ref drawOffset, "drawOffset", Vector2.zero);
             Scribe_Values.Look(ref descentProgress, "descentProgress", 0f);
+            Scribe_Values.Look(ref extendSpeed, "extendSpeed", 0.1f);
+            Scribe_Values.Look(ref descentTime, "descentTime", 1f);
+            Scribe_Values.Look(ref ropeColor, "ropeColor", new Color(0.15f, 0.1f, 0.05f));
+            Scribe_Values.Look(ref ropeWidth, "ropeWidth", 0.2f);
         }
     }
 }
