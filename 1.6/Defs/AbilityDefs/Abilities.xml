@@ -255,7 +255,7 @@
         <height>50</height>
         <width>5</width>
         <planeCount>3</planeCount>
-        <planeSpacing>5</planeSpacing>
+        <planeSpacing>8</planeSpacing>
         <costList>
           <Steel>150</Steel>
           <ComponentIndustrial>15</ComponentIndustrial>
