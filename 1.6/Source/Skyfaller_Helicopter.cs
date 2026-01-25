@@ -70,7 +70,9 @@ namespace OperationEagleGlass
             }
             if (this.IsHashIntervalTick(10))
             {
-                FleckMaker.ThrowDustPuffThick(DrawPos, this.Map, 5f, Color.white);
+                Vector3 dustPos = DrawPos;
+                dustPos.y -= 50f;
+                FleckMaker.ThrowDustPuffThick(dustPos, this.Map, 5f, Color.white);
             }
             if (!this.hasImpacted)
             {
@@ -233,16 +235,27 @@ namespace OperationEagleGlass
 
         public override void DrawAt(Vector3 drawLoc, bool flipRot = false)
         {
-            base.DrawAt(drawLoc, flipRot);
-
             if (gunGraphic != null)
             {
                 Vector3 gunDrawLoc = drawLoc;
                 GetDrawPositionAndRotation(ref gunDrawLoc, out var extraRotation);
                 var ext = def.GetModExtension<HelicopterSkyfallerExtension>();
-                Vector2 gunOffset = ext?.gunDrawOffset ?? new Vector2(0f, -4f);
-                gunGraphic.Draw(gunDrawLoc + new Vector3(gunOffset.x, 0, gunOffset.y), flipRot ? base.Rotation.Opposite : base.Rotation, this, extraRotation);
+                Vector2? gunOffset = Rotation.AsInt switch
+                {
+                    0 => ext?.gunDrawOffsetNorth,
+                    1 => ext?.gunDrawOffsetEast,
+                    2 => ext?.gunDrawOffsetSouth,
+                    3 => ext?.gunDrawOffsetWest,
+                    _ => null
+                };
+                Vector3 gunOffsetVec = gunOffset.HasValue ? new Vector3(gunOffset.Value.x, 0, gunOffset.Value.y) : Vector3.zero;
+                gunOffsetVec = Quaternion.Euler(0, extraRotation, 0) * gunOffsetVec;
+                Vector3 gunPos = gunDrawLoc + gunOffsetVec;
+                gunPos.y = AltitudeLayer.Building.AltitudeFor();
+                gunGraphic.Draw(gunPos, flipRot ? Rotation.Opposite : Rotation, this, extraRotation);
             }
+
+            base.DrawAt(drawLoc, flipRot);
 
             if (!isDeployingRope) return;
 

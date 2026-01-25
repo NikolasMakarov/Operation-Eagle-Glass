@@ -123,6 +123,7 @@ namespace OperationEagleGlass
                         FireProjectile(verb);
                         verbFireTicks[verb] = verb.verbProps.ticksBetweenBurstShots;
                     }
+                    ApplyAreaDamage(verb);
                 }
             }
         }
@@ -139,6 +140,11 @@ namespace OperationEagleGlass
 
             var projectile = (Projectile)GenSpawn.Spawn(verb.verbProps.defaultProjectile, currentPos.ToIntVec3(), Map);
             projectile.Launch(null, spawnPos, targetCell, targetCell, ProjectileHitFlags.IntendedTarget);
+        }
+
+        protected virtual void ApplyAreaDamage(Verb verb)
+        {
+            
         }
     }
 }

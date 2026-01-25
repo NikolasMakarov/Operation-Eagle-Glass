@@ -86,7 +86,10 @@
           <shaderType>Transparent</shaderType>
           <drawSize>(2,2)</drawSize>
         </gunGraphic>
-        <gunDrawOffset>(0, -4)</gunDrawOffset>
+        <gunDrawOffsetNorth>(0, 4)</gunDrawOffsetNorth>
+        <gunDrawOffsetSouth>(0, -4)</gunDrawOffsetSouth>
+        <gunDrawOffsetEast>(3.7, -0.5)</gunDrawOffsetEast>
+        <gunDrawOffsetWest>(-3.7, -0.5)</gunDrawOffsetWest>
       </li>
     </modExtensions>
   </ThingDef>
@@ -158,7 +161,10 @@
           <shaderType>Transparent</shaderType>
           <drawSize>(2,2)</drawSize>
         </gunGraphic>
-        <gunDrawOffset>(0, -4)</gunDrawOffset>
+        <gunDrawOffsetNorth>(0, 4)</gunDrawOffsetNorth>
+        <gunDrawOffsetSouth>(0, -4)</gunDrawOffsetSouth>
+        <gunDrawOffsetEast>(3.7, -0.5)</gunDrawOffsetEast>
+        <gunDrawOffsetWest>(-3.7, -0.5)</gunDrawOffsetWest>
       </li>
     </modExtensions>
   </ThingDef>

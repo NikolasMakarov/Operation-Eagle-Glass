@@ -21,10 +21,9 @@ namespace OperationEagleGlass
         public override IEnumerable<Command> GetGizmos()
         {
             var helicopterComp = this.EffectComps.OfType<CompAbilityEffect_CallHelicopter>().FirstOrDefault();
-
             foreach (var gizmo in base.GetGizmos())
             {
-                if (helicopterComp.skyfaller != null && !helicopterComp.skyfaller.Destroyed)
+                if (helicopterComp != null && helicopterComp.skyfaller != null && !helicopterComp.skyfaller.Destroyed)
                 {
                     var recall = new Command_Action
                     {
@@ -33,8 +32,12 @@ namespace OperationEagleGlass
                         icon = ContentFinder<Texture2D>.Get("UI/Commands/Recall", true),
                         action = delegate
                         {
-                            helicopterComp.skyfaller.Depart();
-                            helicopterComp.skyfaller = null;
+                            helicopterComp = this.EffectComps.OfType<CompAbilityEffect_CallHelicopter>().FirstOrDefault();
+                            if (helicopterComp.skyfaller != null)
+                            {
+                                helicopterComp.skyfaller.Depart();
+                                helicopterComp.skyfaller = null;
+                            }
                         }
                     };
                     yield return recall;
