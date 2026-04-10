@@ -22,7 +22,9 @@ namespace OperationEagleGlass
             base.Tick();
             if (this.IsHashIntervalTick(10))
             {
-                FleckMaker.ThrowDustPuffThick(DrawPos, this.Map, 5f, Color.white);
+                Vector3 dustPos = this.Position.ToVector3();
+                dustPos.y = AltitudeLayer.MoteOverhead.AltitudeFor();
+                FleckMaker.ThrowDustPuffThick(dustPos, this.Map, 5f, Color.white);
             }
         }
     }

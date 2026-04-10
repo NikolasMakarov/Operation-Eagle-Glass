@@ -70,8 +70,8 @@ namespace OperationEagleGlass
             }
             if (this.IsHashIntervalTick(10))
             {
-                Vector3 dustPos = DrawPos;
-                dustPos.y -= 50f;
+                Vector3 dustPos = this.Position.ToVector3();
+                dustPos.y = AltitudeLayer.MoteOverhead.AltitudeFor();
                 FleckMaker.ThrowDustPuffThick(dustPos, this.Map, 5f, Color.white);
             }
             if (!this.hasImpacted)

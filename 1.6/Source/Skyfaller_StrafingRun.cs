@@ -18,14 +18,14 @@ namespace OperationEagleGlass
 
             Vector3 spawnPos = DrawPos;
 
-            var widthInt = (int)width;
+            var widthInt = Mathf.CeilToInt(width / 2f);
             var forwardOffset = (direction * 10).ToIntVec3();
-            var perpendicularDir = new Vector3(direction.z, 0, -direction.x);
+            var perpendicularDir = new Vector3(direction.z, 0, -direction.x).normalized;
             var perpendicularOffset = (perpendicularDir * Rand.Range(-widthInt, widthInt)).ToIntVec3();
             var targetCell = currentPos.ToIntVec3() + forwardOffset + perpendicularOffset;
 
             var projectile = (Projectile)GenSpawn.Spawn(verb.verbProps.defaultProjectile, currentPos.ToIntVec3(), Map);
-            projectile.Launch(null, spawnPos, targetCell, targetCell, ProjectileHitFlags.All);
+            projectile.Launch(instigator, spawnPos, targetCell, targetCell, ProjectileHitFlags.All);
         }
 
         protected override void ApplyAreaDamage(Verb verb)
@@ -36,9 +36,9 @@ namespace OperationEagleGlass
             var damageAmount = projectileDef.projectile.GetDamageAmount(null);
             var armorPenetration = projectileDef.projectile.GetArmorPenetration(null);
 
-            var widthInt = (int)width;
+            var widthInt = Mathf.CeilToInt(width / 2f);
             var forwardOffset = (direction * 10).ToIntVec3();
-            var perpendicularDir = new Vector3(direction.z, 0, -direction.x);
+            var perpendicularDir = new Vector3(direction.z, 0, -direction.x).normalized;
 
             for (int x = -widthInt; x <= widthInt; x++)
             {
@@ -47,12 +47,12 @@ namespace OperationEagleGlass
 
                 if (!cell.InBounds(Map)) continue;
 
-                var things = Map.thingGrid.ThingsAt(cell).ToList();
-                foreach (var thing in things)
+                var things = cell.GetThingList(Map);
+                for (int i = things.Count - 1; i >= 0; i--)
                 {
-                    if (thing is Pawn pawn && !pawn.Dead && !pawn.Downed && pawn.Faction != null && pawn.Faction.HostileTo(Faction.OfPlayer))
+                    if (things[i] is Pawn pawn && !pawn.Dead)
                     {
-                        var dinfo = new DamageInfo(DamageDefOf.Bullet, damageAmount, armorPenetration, -1f, instigator);
+                        var dinfo = new DamageInfo(projectileDef.projectile.damageDef ?? DamageDefOf.Bullet, damageAmount, armorPenetration, -1f, instigator);
                         pawn.TakeDamage(dinfo);
                     }
                 }
