@@ -33,7 +33,7 @@ namespace OperationEagleGlass
             var projectileDef = verb.verbProps.defaultProjectile;
             if (projectileDef == null) return;
 
-            var damageAmount = projectileDef.projectile.GetDamageAmount(null);
+            var damageAmount = projectileDef.projectile.GetDamageAmount(null) * 2;
             var armorPenetration = projectileDef.projectile.GetArmorPenetration(null);
 
             var widthInt = Mathf.CeilToInt(width / 2f);
